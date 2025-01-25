@@ -3,6 +3,7 @@ using UnityEngine;
 public class WASD : MonoBehaviour
 {
     public float velocidad = 5f; // Velocidad de movimiento del objeto
+    [SerializeField] private Rigidbody2D rb; // Referencia al Rigidbody2D del jugador
 
     void Update()
     {
@@ -15,5 +16,11 @@ public class WASD : MonoBehaviour
 
         // Mover el objeto
         transform.Translate(direccion * velocidad * Time.deltaTime, Space.World);
+
+    }
+
+    private void Start()
+    {
+        rb.linearDamping = 2f;
     }
 }
