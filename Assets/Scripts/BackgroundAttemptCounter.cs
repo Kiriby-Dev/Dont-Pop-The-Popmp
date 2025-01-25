@@ -1,0 +1,15 @@
+using UnityEngine;
+using TMPro;
+using UnityEngine.UI; // Si usas TextMeshPro
+
+public class BackgroundAttemptCounter : MonoBehaviour
+{
+    private TextMeshProUGUI attemptText;
+
+    private void Start()
+    {
+        attemptText = GetComponent<TextMeshProUGUI>();
+        int attempts = PlayerPrefs.GetInt("CantidadIntentos", 0);
+        attemptText.text = "Intentos: " + attempts.ToString();
+    }
+}
