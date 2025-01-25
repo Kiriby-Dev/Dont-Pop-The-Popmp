@@ -35,10 +35,18 @@ public class MenuPausa : MonoBehaviour
         Time.timeScale = 1f;              // Restaura el tiempo del juego
         isPaused = false;
     }
-
+    
     public void LoadMainMenu()
     {
         Time.timeScale = 1f;               // Restaura el tiempo antes de cargar la escena
         SceneManager.LoadScene("MenuInicio"); // Cambia "MenuInicio" por el nombre de tu escena del menú principal
+    }
+
+    public void RestartGame()
+    {
+        MenuPausaPanel.SetActive(false);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        Time.timeScale = 1f;
+        isPaused = false;
     }
 }

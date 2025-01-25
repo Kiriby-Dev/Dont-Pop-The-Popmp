@@ -6,7 +6,7 @@ AnimationClip:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Explosion_Burbuja
+  m_Name: Explosion_Unpause
   serializedVersion: 7
   m_Legacy: 0
   m_Compressed: 0
@@ -89,9 +89,30 @@ AnimationClip:
   m_HasMotionFloatCurves: 0
   m_Events:
   - time: 0
+    functionName: OnUnpause
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 0
+    functionName: OnUnpause
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 0
     functionName: 
     data: 
     objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 0
+    functionName: OnUnpause
+    data: 
+    objectReferenceParameter: {fileID: -523985543, guid: bf008272a242d9148bfadf861a1d2a58, type: 3}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
