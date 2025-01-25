@@ -155,6 +155,8 @@ MonoBehaviour:
     isLoaded: 1
   - sceneName: Mello
     isLoaded: 1
+  - sceneName: MenuInicio
+    isLoaded: 1
 --- !u!4 &1917852767
 Transform:
   m_ObjectHideFlags: 0
