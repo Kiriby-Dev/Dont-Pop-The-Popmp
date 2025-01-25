@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class LoadAllScenes : MonoBehaviour
+public class SceneLoader : MonoBehaviour
 {
     [SerializeField] ScenesList[] scenesList;
 
