@@ -15,6 +15,9 @@ EditorBuildSettings:
     path: Assets/Scenes/Mello.unity
     guid: 472fd6e2ce2c9d045a68cca659f09ccb
   - enabled: 1
+    path: Assets/Scenes/Score.unity
+    guid: 1b37a922c03b1ac4d919c242ba025eae
+  - enabled: 1
     path: Assets/Scenes/Nico.unity
     guid: d4c6a685d40ed6143b907aa744388c86
   m_configObjects:
