@@ -364,7 +364,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: 8c708b5748bae58488e13cd74e81f597, type: 3}
+  m_Sprite: {fileID: -2538037334628935444, guid: 10b720b62239a8d4aa22ef0f632208e4, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -439,11 +439,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pushForce: 10
+  rotationSpeed: 10
   maxSpeed: 15
+  maxRotation: 10
   maxDistance: 8
   waterResistance: 2
   gravedad: -0.05
-  burbuja: {fileID: 1197462800}
+  speedIncrease: 2
+  rotationIncrease: 2
+  smallBubble: {fileID: -2538037334628935444, guid: 10b720b62239a8d4aa22ef0f632208e4, type: 3}
+  mediumBubble: {fileID: 1393552171, guid: 10b720b62239a8d4aa22ef0f632208e4, type: 3}
+  bigBubble: {fileID: -1288585845, guid: 10b720b62239a8d4aa22ef0f632208e4, type: 3}
 --- !u!50 &1197462800
 Rigidbody2D:
   serializedVersion: 5
@@ -552,8 +558,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 0
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: b6f414f0640596b469d7b9fea163467f, type: 2}
+  m_sharedMaterial: {fileID: 4712962242112419286, guid: b6f414f0640596b469d7b9fea163467f, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
