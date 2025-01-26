@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Finish : MonoBehaviour
 {
@@ -18,6 +19,7 @@ public class Finish : MonoBehaviour
         {
             // Llamar a la función TerminarJuego() del componente Timer
             timerScript.TerminarJuego();
+            SceneManager.LoadScene("Score");
         }
     }
 }
