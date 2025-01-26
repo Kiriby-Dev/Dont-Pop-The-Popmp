@@ -7,8 +7,7 @@ public class MenuPausa : MonoBehaviour
     private bool isPaused = false;
 
     void Update()
-    {
-        
+    {    
         if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.P))
         {
             if (isPaused)
