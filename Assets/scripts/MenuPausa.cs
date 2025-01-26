@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -25,6 +26,7 @@ public class MenuPausa : MonoBehaviour
 
     public void PauseGame()
     {
+        PlayerPrefs.SetInt("Paused", 1);
         MenuPausaPanel.SetActive(true); // Activa el menú de pausa
         Time.timeScale = 0f;            // Detiene el tiempo del juego
         isPaused = true;
@@ -33,6 +35,7 @@ public class MenuPausa : MonoBehaviour
 
     public void ResumeGame()
     {
+        PlayerPrefs.SetInt("Paused", 0);
         MenuPausaPanel.SetActive(false); // Desactiva el menú de pausa
         Time.timeScale = 1f;             // Restaura el tiempo del juego
         isPaused = false;
@@ -49,6 +52,7 @@ public class MenuPausa : MonoBehaviour
 
     public void LoadMainMenu()
     {
+        PlayerPrefs.SetInt("Paused", 0);
         Time.timeScale = 1f;                // Restaura el tiempo antes de cargar la escena
         SceneManager.LoadScene("MenuInicio"); // Cambia "MenuInicio" por el nombre de tu escena del menú principal
         timer.ReiniciarContador();
@@ -56,11 +60,14 @@ public class MenuPausa : MonoBehaviour
 
     public void RestartGame()
     {
+        PlayerPrefs.SetInt("Paused", 0);
         MenuPausaPanel.SetActive(false);
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        SceneManager.LoadScene("Nivel1");
         Time.timeScale = 1f;
         isPaused = false;
         timer.ReiniciarContador();
+        PlayerPrefs.SetInt("CantidadIntentos", 0);
+        PlayerPrefs.Save();
     }
 
     public bool IsPaused()

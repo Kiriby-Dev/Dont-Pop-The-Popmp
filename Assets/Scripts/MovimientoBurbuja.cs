@@ -14,6 +14,7 @@ public class MovimientoBurbuja : MonoBehaviour
     [SerializeField] private float waterResistance = 2f; // Resistencia del agua
     [SerializeField] private float gravedad = -0.05f; // Fuerza con la que sube la burbuja
     [SerializeField] private float delay = 0.01f;
+
     private bool isWaiting = false;
     private float timer;
     private Vector3 direction;
@@ -58,7 +59,8 @@ public class MovimientoBurbuja : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButtonDown(0) && movable) // Botón izquierdo del mouse
+        int paused = PlayerPrefs.GetInt("Paused", 0);
+        if (Input.GetMouseButtonDown(0) && movable && paused != 1) // Botón izquierdo del mouse
         {
             // Obtener la posición del clic
             Vector3 clickPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);

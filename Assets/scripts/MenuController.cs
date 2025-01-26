@@ -7,6 +7,9 @@ public class MenuController : MonoBehaviour
     public void Jugar()
     {
         SceneManager.LoadScene("Nivel1"); // Cambia "NombreDeTuEscenaDeJuego" al nombre exacto de tu escena
+        PlayerPrefs.SetInt("CantidadIntentos", 0);
+        PlayerPrefs.SetInt("Paused", 0);
+        PlayerPrefs.Save();
     }
 
     // Función para salir del juego
