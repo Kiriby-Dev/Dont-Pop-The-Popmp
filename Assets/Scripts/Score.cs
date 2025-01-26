@@ -56,7 +56,7 @@ public class Score : MonoBehaviour
         }
 
         // Calcula la puntuación final basada en el tiempo
-        puntuacionFinal = (tiempoTotal * puntuacionPorSegundo) / 100;
+        puntuacionFinal = Mathf.FloorToInt(567.3024f - 15.8711f * tiempoTotal/100 + 0.1069f * (tiempoTotal/100 ^ 2));
 
         // Inicia la animación de puntuación progresiva
         await MostrarPuntuacionProgresivamente(0);

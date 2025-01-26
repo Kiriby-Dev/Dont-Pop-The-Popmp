@@ -244,7 +244,7 @@ MonoBehaviour:
   textoPuntuacion: {fileID: 1846863519}
   textoNota: {fileID: 658443858}
   puntuacionPorSegundo: 100
-  puntuacionPorBurbuja: 50
+  puntuacionPorBurbuja: 100
   velocidadIncremento: 0.01
   puntuacionS: 1000
   puntuacionA: 900
