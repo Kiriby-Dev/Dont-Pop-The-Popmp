@@ -4,7 +4,6 @@ public class MovimientoBotones : MonoBehaviour
 {
     [SerializeField] private float speed = 1f;
     [SerializeField] private float amplitud = 20f;
-    [SerializeField] private float alturabase = 0f;
     [SerializeField] private GameObject boton;
     RectTransform rectTransform;
     private void Start()
