@@ -53,4 +53,8 @@ public class MenuPausa : MonoBehaviour
         isPaused = false;
         timer.ReiniciarContador();
     }
+    public bool IsPaused()
+    {
+        return isPaused;
+    }
 }
