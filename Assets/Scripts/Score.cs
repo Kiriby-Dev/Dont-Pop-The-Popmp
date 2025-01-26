@@ -52,7 +52,7 @@ public class Score : MonoBehaviour
         // Muestra el tiempo total del jugador
         if (textoTiempo != null)
         {
-            textoTiempo.text = (tiempoTotal / 100f).ToString();
+            textoTiempo.text = "TIEMPO: " + (tiempoTotal / 100f).ToString();
         }
 
         // Calcula la puntuación final basada en el tiempo
@@ -74,7 +74,6 @@ public class Score : MonoBehaviour
         {
             await Task.Delay(1000);
             ChangeImage(burbujas[i]);
-            Debug.Log($"BURBUJA {i}");
             int puntuacionPrevia = puntuacionFinal;
             puntuacionFinal += puntuacionPorBurbuja;
             await MostrarPuntuacionProgresivamente(puntuacionPrevia);
@@ -97,7 +96,7 @@ public class Score : MonoBehaviour
     {
         if (textoPuntuacion != null)
         {
-            textoPuntuacion.text = "Puntuación: 0"; // Inicializa el texto
+            textoPuntuacion.text = "PUNTAJE: 0"; // Inicializa el texto
         }
 
         while (puntuacionActual < puntuacionFinal)
@@ -109,7 +108,7 @@ public class Score : MonoBehaviour
             // Actualiza el texto en la UI
             if (textoPuntuacion != null)
             {
-                textoPuntuacion.text = $"Puntuación: {puntuacionActual}";
+                textoPuntuacion.text = $"PUNTAJE: {puntuacionActual}";
             }
 
             // Espera antes del siguiente incremento
@@ -119,7 +118,7 @@ public class Score : MonoBehaviour
         // Asegúrate de que la puntuación final se muestre correctamente
         if (textoPuntuacion != null)
         {
-            textoPuntuacion.text = $"Puntuación: {puntuacionFinal}";
+            textoPuntuacion.text = $"PUNTAJE: {puntuacionFinal}";
         }
     }
 

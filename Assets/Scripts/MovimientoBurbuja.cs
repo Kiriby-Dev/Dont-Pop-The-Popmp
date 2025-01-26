@@ -22,7 +22,6 @@ public class MovimientoBurbuja : MonoBehaviour
     [SerializeField] private Sprite bigBubble;
     [SerializeField] private Sprite goldenBubble;
 
-    private Vector2 respawnPoint;
     private int currentSize = 1;
     private bool movable = true;
     private Rigidbody2D burbuja;
@@ -114,7 +113,6 @@ public class MovimientoBurbuja : MonoBehaviour
     {
         if (collision.collider.CompareTag("Obstaculo"))
         {
-            Debug.Log("Choca");
            resetStage();
         }
     }
@@ -122,7 +120,6 @@ public class MovimientoBurbuja : MonoBehaviour
     public void resetStage()
     {
         movable = false;
-        burbuja.gravityScale = 0f;
         burbuja.linearVelocity = Vector2.zero;
         burbuja.angularVelocity = 0f;
         burbuja.gravityScale = 0f;
@@ -137,7 +134,6 @@ public class MovimientoBurbuja : MonoBehaviour
     {
         int cantIntentos = PlayerPrefs.GetInt("CantidadIntentos", 0);
         cantIntentos++;
-        Debug.Log(cantIntentos);
         PlayerPrefs.SetInt("CantidadIntentos", cantIntentos);
         PlayerPrefs.Save();
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
