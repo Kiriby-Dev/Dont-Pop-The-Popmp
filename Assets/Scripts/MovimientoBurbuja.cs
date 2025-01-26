@@ -13,7 +13,11 @@ public class MovimientoBurbuja : MonoBehaviour
     [SerializeField] private float maxDistance = 8f; // Distancia máxima en que el click tiene efecto
     [SerializeField] private float waterResistance = 2f; // Resistencia del agua
     [SerializeField] private float gravedad = -0.05f; // Fuerza con la que sube la burbuja
+
+    [Header("Cooldowns")]
     [SerializeField] private float delay = 0.01f;
+    [SerializeField] private float clickCooldown = 0.4f;
+    [SerializeField] private float timerCooldown = 0;
 
     private bool isWaiting = false;
     private float timer;
@@ -28,6 +32,9 @@ public class MovimientoBurbuja : MonoBehaviour
     [SerializeField] private Sprite bigBubble;
     [SerializeField] private Sprite goldenBubble;
 
+    [SerializeField] private GameObject prefabMasCien;
+
+    private OndaClick scriptCamara;
     private int currentSize = 1;
     private bool movable = true;
     private Rigidbody2D burbuja;
@@ -42,6 +49,8 @@ public class MovimientoBurbuja : MonoBehaviour
         {
             animator.enabled = false;
         }
+
+        scriptCamara = Camera.main.GetComponent<OndaClick>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         burbuja = GetComponent<Rigidbody2D>();
         burbujaCollider = GetComponent<CircleCollider2D>();
@@ -53,15 +62,20 @@ public class MovimientoBurbuja : MonoBehaviour
         burbuja.gravityScale = gravedad;
         setWaterResistance();
         PlayerPrefs.SetInt("CantidadBurbujas", 0);
-        PlayerPrefs.Save();
     }
 
     // Update is called once per frame
     void Update()
     {
+        timerCooldown -= Time.deltaTime;
+
         int paused = PlayerPrefs.GetInt("Paused", 0);
-        if (Input.GetMouseButtonDown(0) && movable && paused != 1) // Botón izquierdo del mouse
+
+        if (Input.GetMouseButtonDown(0) && movable && paused == 0 && timerCooldown <= 0)
         {
+            timerCooldown = clickCooldown;
+            scriptCamara.SpawnPrefabAtCursor();
+
             // Obtener la posición del clic
             Vector3 clickPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             clickPosition.z = 0f;
@@ -79,6 +93,7 @@ public class MovimientoBurbuja : MonoBehaviour
                 timer = delay * distance; // Configurar el temporizador
             }
         }
+
         if (isWaiting)
         {
             timer -= Time.deltaTime;
@@ -91,12 +106,13 @@ public class MovimientoBurbuja : MonoBehaviour
                 }
         }
 
-        // Limitar la velocidad máxima del Rigidbody2D
+        // Limitar la velocidad máxima
         if (burbuja.linearVelocity.magnitude > maxSpeed)
         {
             burbuja.linearVelocity = burbuja.linearVelocity.normalized * maxSpeed;
         }
 
+        // Limitar la velocidad de rotación máxima
         if (burbuja.angularVelocity > maxRotation)
         {
             burbuja.angularVelocity = maxRotation;
@@ -118,6 +134,8 @@ public class MovimientoBurbuja : MonoBehaviour
         if (collision.CompareTag("BurbujaChica"))
         {
             agrandarBurbuja();
+            GameObject masCien = Instantiate(prefabMasCien);
+            masCien.transform.position = transform.position;
             int cantBurbujas = PlayerPrefs.GetInt("CantidadBurbujas", 0);
             cantBurbujas++;
             PlayerPrefs.SetInt("CantidadBurbujas", cantBurbujas);
