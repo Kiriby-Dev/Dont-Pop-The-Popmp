@@ -1,4 +1,5 @@
 using System;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -12,6 +13,10 @@ public class MovimientoBurbuja : MonoBehaviour
     [SerializeField] private float maxDistance = 8f; // Distancia máxima en que el click tiene efecto
     [SerializeField] private float waterResistance = 2f; // Resistencia del agua
     [SerializeField] private float gravedad = -0.05f; // Fuerza con la que sube la burbuja
+    [SerializeField] private float delay = 0.01f;
+    private bool isWaiting = false;
+    private float timer;
+    private Vector3 direction;
 
     [Header("Mejoras de movimiento")]
     [SerializeField] private float speedIncrease = 2f;
@@ -39,7 +44,6 @@ public class MovimientoBurbuja : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
         burbuja = GetComponent<Rigidbody2D>();
         burbujaCollider = GetComponent<CircleCollider2D>();
-        GameObject respawnObject = GameObject.FindGameObjectWithTag("Respawn");
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -63,16 +67,26 @@ public class MovimientoBurbuja : MonoBehaviour
             // Obtener la posición actual del objeto
             Vector3 objectPosition = transform.position;
 
-            Vector3 direction = objectPosition - clickPosition;
+            direction = objectPosition - clickPosition;
 
             float distance = direction.magnitude;
 
-            if (distance < maxDistance) 
-            { 
-                // Aplicar fuerza al Rigidbody2D en la dirección opuesta
-                burbuja.AddForce(direction.normalized * pushForce / direction.magnitude, ForceMode2D.Impulse);
-                burbuja.angularVelocity = rotationSpeed / distance;
+            if (distance < maxDistance)
+            {
+                isWaiting = true;
+                timer = delay * distance; // Configurar el temporizador
             }
+        }
+        if (isWaiting)
+        {
+            timer -= Time.deltaTime;
+            if (timer < 0f)
+                {
+                    float distance = direction.magnitude;
+                    burbuja.AddForce(direction.normalized * pushForce / direction.magnitude, ForceMode2D.Impulse);
+                    burbuja.angularVelocity = rotationSpeed / distance;
+                    isWaiting = false;
+                }
         }
 
         // Limitar la velocidad máxima del Rigidbody2D
