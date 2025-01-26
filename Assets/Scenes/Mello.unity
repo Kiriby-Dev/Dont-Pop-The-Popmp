@@ -130,6 +130,7 @@ GameObject:
   - component: {fileID: 232818234}
   - component: {fileID: 232818236}
   - component: {fileID: 232818235}
+  - component: {fileID: 232818237}
   m_Layer: 5
   m_Name: MenuPausaPanel
   m_TagString: Untagged
@@ -150,8 +151,8 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 810483504}
-  - {fileID: 470351762}
   - {fileID: 597088141}
+  - {fileID: 470351762}
   m_Father: {fileID: 282277237}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -197,6 +198,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 232818233}
   m_CullTransparentMesh: 1
+--- !u!114 &232818237
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 232818233}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ca99a4487b5b1d4186e94bfe4dfc513, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefabBurbujita: {fileID: 5689412546814858713, guid: a5d671f01f268324783af4b4b32ad63a, type: 3}
+  menuPausaPanel: {fileID: 232818234}
+  tiempoEntreBurbujas: 1
+  maxBurbujas: 15
 --- !u!1 &282277233
 GameObject:
   m_ObjectHideFlags: 0
@@ -597,6 +614,7 @@ GameObject:
   - component: {fileID: 470351765}
   - component: {fileID: 470351764}
   - component: {fileID: 470351763}
+  - component: {fileID: 470351766}
   m_Layer: 5
   m_Name: BotonReanudar
   m_TagString: Untagged
@@ -718,6 +736,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 470351761}
   m_CullTransparentMesh: 1
+--- !u!114 &470351766
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 470351761}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56a79e0a76485014795795d6b4682edc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 1
+  amplitud: 20
+  alturabase: 0
+  boton: {fileID: 470351761}
 --- !u!1 &597088140
 GameObject:
   m_ObjectHideFlags: 0
@@ -730,6 +764,7 @@ GameObject:
   - component: {fileID: 597088144}
   - component: {fileID: 597088143}
   - component: {fileID: 597088142}
+  - component: {fileID: 597088145}
   m_Layer: 5
   m_Name: BotonReset
   m_TagString: Untagged
@@ -851,6 +886,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 597088140}
   m_CullTransparentMesh: 1
+--- !u!114 &597088145
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 597088140}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56a79e0a76485014795795d6b4682edc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 1
+  amplitud: 10
+  alturabase: 0
+  boton: {fileID: 597088140}
 --- !u!1 &810483503
 GameObject:
   m_ObjectHideFlags: 0
@@ -863,6 +914,7 @@ GameObject:
   - component: {fileID: 810483507}
   - component: {fileID: 810483506}
   - component: {fileID: 810483505}
+  - component: {fileID: 810483508}
   m_Layer: 5
   m_Name: BotonSalirMenu
   m_TagString: Untagged
@@ -984,6 +1036,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 810483503}
   m_CullTransparentMesh: 1
+--- !u!114 &810483508
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 810483503}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56a79e0a76485014795795d6b4682edc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 1
+  amplitud: 10
+  alturabase: 0
+  boton: {fileID: 810483503}
 --- !u!1 &1753677486
 GameObject:
   m_ObjectHideFlags: 0
@@ -997,6 +1065,7 @@ GameObject:
   - component: {fileID: 1753677487}
   - component: {fileID: 1753677490}
   - component: {fileID: 1753677491}
+  - component: {fileID: 1753677492}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1137,6 +1206,20 @@ MonoBehaviour:
   player: {fileID: 0}
   smoothSpeed: 0.1
   offset: {x: 2, y: 0, z: -10}
+--- !u!114 &1753677492
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1753677486}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd832d5666eb73249a18c8244eacefe7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefab: {fileID: 4996875804503437144, guid: 5cd5f6199b3152f4ba190449a5627c2a, type: 3}
+  tiempoAnimacion: 0.6
 --- !u!1 &1925905159
 GameObject:
   m_ObjectHideFlags: 0
