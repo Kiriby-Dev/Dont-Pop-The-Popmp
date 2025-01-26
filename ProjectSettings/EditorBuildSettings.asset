@@ -15,7 +15,7 @@ EditorBuildSettings:
     path: Assets/Scenes/Lucho.unity
     guid: e7d7a6d7848d659429e69e01150dc3a6
   - enabled: 1
-    path: Assets/Scenes/MenuIncio.unity
+    path: Assets/Scenes/MenuInicio.unity
     guid: 472fd6e2ce2c9d045a68cca659f09ccb
   - enabled: 1
     path: Assets/Scenes/Score.unity

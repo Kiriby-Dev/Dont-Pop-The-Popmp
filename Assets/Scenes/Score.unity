@@ -244,6 +244,7 @@ MonoBehaviour:
   textoPuntuacion: {fileID: 1846863519}
   textoNota: {fileID: 658443858}
   puntuacionPorSegundo: 100
+  puntuacionPorBurbuja: 50
   velocidadIncremento: 0.01
   puntuacionS: 1000
   puntuacionA: 900
@@ -251,6 +252,10 @@ MonoBehaviour:
   puntuacionC: 700
   puntuacionD: 600
   puntuacionE: 500
+  burbuja1: {fileID: 920587650}
+  burbuja2: {fileID: 538909946}
+  burbuja3: {fileID: 554927033}
+  filledBubble: {fileID: -1288585845, guid: 10b720b62239a8d4aa22ef0f632208e4, type: 3}
 --- !u!1 &528088215
 GameObject:
   m_ObjectHideFlags: 0
@@ -444,7 +449,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 1574047202, guid: a4396e902295c804f95f587ca96ca240, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -519,7 +524,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 1574047202, guid: a4396e902295c804f95f587ca96ca240, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -866,7 +871,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 1574047202, guid: a4396e902295c804f95f587ca96ca240, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
