@@ -584,9 +584,9 @@ MonoBehaviour:
   gravedad: -0.05
   speedIncrease: 2
   rotationIncrease: 2
-  smallBubble: {fileID: -2538037334628935444, guid: 10b720b62239a8d4aa22ef0f632208e4, type: 3}
   mediumBubble: {fileID: 1393552171, guid: 10b720b62239a8d4aa22ef0f632208e4, type: 3}
   bigBubble: {fileID: -1288585845, guid: 10b720b62239a8d4aa22ef0f632208e4, type: 3}
+  goldenBubble: {fileID: 21300000, guid: 5c3c9d172750e574ebd534d436e63ea7, type: 3}
 --- !u!50 &1197462800
 Rigidbody2D:
   serializedVersion: 5
