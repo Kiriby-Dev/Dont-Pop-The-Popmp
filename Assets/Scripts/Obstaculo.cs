@@ -4,10 +4,10 @@ public class Obstaculo : MonoBehaviour
 {
     [SerializeField] private GameManager gameManager;
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.CompareTag("Player")) {
-            Debug.Log("Colisión con el jugador detectada.");
+        if (collision.gameObject.CompareTag("Player"))
+        {
             gameManager.GameOver();
         }
     }
