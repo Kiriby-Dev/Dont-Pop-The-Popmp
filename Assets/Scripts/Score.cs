@@ -1,14 +1,17 @@
+using System;
 using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Score : MonoBehaviour
 {
-    [Header ("Configuracion")]
+    [Header("Configuracion")]
     [SerializeField] private TMP_Text textoTiempo;     // Texto para mostrar el tiempo total
     [SerializeField] private TMP_Text textoPuntuacion; // Texto para mostrar la puntuación final
     [SerializeField] private TMP_Text textoNota;
     [SerializeField] private int puntuacionPorSegundo = 10; // Puntos por segundo de juego
+    [SerializeField] private int puntuacionPorBurbuja = 50; // Puntos por burbuja conseguida
     [SerializeField] private float velocidadIncremento = 0.01f; // Velocidad de incremento en segundos
 
     [Header("Notas")]
@@ -19,11 +22,26 @@ public class Score : MonoBehaviour
     [SerializeField] private int puntuacionD;
     [SerializeField] private int puntuacionE;
 
+    [Header("Burbujas")]
+    [SerializeField] private Image burbuja1;
+    [SerializeField] private Image burbuja2;
+    [SerializeField] private Image burbuja3;
+    private Image[] burbujas;
+    [SerializeField] private Sprite filledBubble;
+
+    private SpriteRenderer spriteRenderer;
+
     private int puntuacionFinal; // Puntuación total calculada
     private int tiempoTotal;
 
+    private void Awake()
+    {
+        burbujas = new Image[] { burbuja1, burbuja2, burbuja3 };
+    }
+
     private void Start()
     {
+        spriteRenderer = GetComponent<SpriteRenderer>();
         tiempoTotal = PlayerPrefs.GetInt("TiempoTotal", 0);
         MostrarPantallaFinal();
     }
@@ -34,26 +52,51 @@ public class Score : MonoBehaviour
         // Muestra el tiempo total del jugador
         if (textoTiempo != null)
         {
-            textoTiempo.text = (tiempoTotal/100f).ToString();
+            textoTiempo.text = "TIEMPO: " + (tiempoTotal / 100f).ToString();
         }
 
         // Calcula la puntuación final basada en el tiempo
-        puntuacionFinal = (tiempoTotal * puntuacionPorSegundo)/100;
+        puntuacionFinal = (tiempoTotal * puntuacionPorSegundo) / 100;
 
         // Inicia la animación de puntuación progresiva
-        await MostrarPuntuacionProgresivamente();
+        await MostrarPuntuacionProgresivamente(0);
+
+        int cantBurbujas = PlayerPrefs.GetInt("CantidadBurbujas", 0);
+
+        await AgregarPuntosBurbujas(cantBurbujas);
 
         textoNota.text = NotaFinal(puntuacionFinal);
     }
 
-    // Método para mostrar la puntuación subiendo progresivamente
-    private async Task MostrarPuntuacionProgresivamente()
+    private async Task AgregarPuntosBurbujas(int cantBurbujas)
     {
-        int puntuacionActual = 0;
+        for (int i = 0; i < cantBurbujas; i++)
+        {
+            await Task.Delay(1000);
+            ChangeImage(burbujas[i]);
+            int puntuacionPrevia = puntuacionFinal;
+            puntuacionFinal += puntuacionPorBurbuja;
+            await MostrarPuntuacionProgresivamente(puntuacionPrevia);
+            
+        }
+    }
 
+    public void ChangeImage(Image target)
+    {
+        //Image imageComponent = target.GetComponent<Image>();
+
+        if (target != null)
+        {
+            target.sprite = filledBubble;
+        }
+    }
+
+    // Método para mostrar la puntuación subiendo progresivamente
+    private async Task MostrarPuntuacionProgresivamente(int puntuacionActual)
+    {
         if (textoPuntuacion != null)
         {
-            textoPuntuacion.text = "Puntuación: 0"; // Inicializa el texto
+            textoPuntuacion.text = "PUNTAJE: 0"; // Inicializa el texto
         }
 
         while (puntuacionActual < puntuacionFinal)
@@ -65,7 +108,7 @@ public class Score : MonoBehaviour
             // Actualiza el texto en la UI
             if (textoPuntuacion != null)
             {
-                textoPuntuacion.text = $"Puntuación: {puntuacionActual}";
+                textoPuntuacion.text = $"PUNTAJE: {puntuacionActual}";
             }
 
             // Espera antes del siguiente incremento
@@ -75,7 +118,7 @@ public class Score : MonoBehaviour
         // Asegúrate de que la puntuación final se muestre correctamente
         if (textoPuntuacion != null)
         {
-            textoPuntuacion.text = $"Puntuación: {puntuacionFinal}";
+            textoPuntuacion.text = $"PUNTAJE: {puntuacionFinal}";
         }
     }
 

@@ -18,12 +18,12 @@ public class MovimientoBurbuja : MonoBehaviour
     [SerializeField] private float rotationIncrease = 2f;
 
     [Header("Sprites de burbuja")]
-    [SerializeField] private Sprite smallBubble;
     [SerializeField] private Sprite mediumBubble;
     [SerializeField] private Sprite bigBubble;
+    [SerializeField] private Sprite goldenBubble;
 
-    private Vector2 respawnPoint;
     private int currentSize = 1;
+    private bool movable = true;
     private Rigidbody2D burbuja;
     private CircleCollider2D burbujaCollider;
     private SpriteRenderer spriteRenderer;
@@ -47,12 +47,14 @@ public class MovimientoBurbuja : MonoBehaviour
     {
         burbuja.gravityScale = gravedad;
         setWaterResistance();
+        PlayerPrefs.SetInt("CantidadBurbujas", 0);
+        PlayerPrefs.Save();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButtonDown(0)) // Botón izquierdo del mouse
+        if (Input.GetMouseButtonDown(0) && movable) // Botón izquierdo del mouse
         {
             // Obtener la posición del clic
             Vector3 clickPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -100,6 +102,10 @@ public class MovimientoBurbuja : MonoBehaviour
         if (collision.CompareTag("BurbujaChica"))
         {
             agrandarBurbuja();
+            int cantBurbujas = PlayerPrefs.GetInt("CantidadBurbujas", 0);
+            cantBurbujas++;
+            PlayerPrefs.SetInt("CantidadBurbujas", cantBurbujas);
+            PlayerPrefs.Save();
         }
     }
 
@@ -107,13 +113,20 @@ public class MovimientoBurbuja : MonoBehaviour
     {
         if (collision.collider.CompareTag("Obstaculo"))
         {
-            burbuja.linearVelocity = Vector2.zero;
-            burbuja.angularVelocity = 0f;
-            if (animator != null)
-            {
-                animator.enabled = true;
-                animator.SetTrigger("Explode");
-            }
+           resetStage();
+        }
+    }
+
+    public void resetStage()
+    {
+        movable = false;
+        burbuja.linearVelocity = Vector2.zero;
+        burbuja.angularVelocity = 0f;
+        burbuja.gravityScale = 0f;
+        if (animator != null)
+        {
+            animator.enabled = true;
+            animator.SetTrigger("Explode");
         }
     }
 
@@ -121,7 +134,6 @@ public class MovimientoBurbuja : MonoBehaviour
     {
         int cantIntentos = PlayerPrefs.GetInt("CantidadIntentos", 0);
         cantIntentos++;
-        Debug.Log(cantIntentos);
         PlayerPrefs.SetInt("CantidadIntentos", cantIntentos);
         PlayerPrefs.Save();
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
@@ -145,7 +157,16 @@ public class MovimientoBurbuja : MonoBehaviour
                 burbujaCollider.radius = 0.54f;
                 pushForce += speedIncrease;
                 maxSpeed += speedIncrease;
+                rotationSpeed += rotationIncrease;
+                maxRotation += rotationIncrease;
                 currentSize++;
+                break;
+            case 3:
+                spriteRenderer.sprite = goldenBubble;
+                pushForce += speedIncrease;
+                maxSpeed += speedIncrease;
+                rotationSpeed += rotationIncrease;
+                maxRotation += rotationIncrease;
                 break;
             default:
                 break;
