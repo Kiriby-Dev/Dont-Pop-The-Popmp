@@ -11,16 +11,8 @@ public class OndaClick : MonoBehaviour
         menuPausa = FindFirstObjectByType<MenuPausa>();
     }
 
-    void Update()
-    {
-        // Detecta si se hace clic izquierdo y no está en pausa o bloqueado
-        if (!menuPausa.IsPaused() && !menuPausa.PreventClick() && Input.GetMouseButtonDown(0)) // 0 es clic izquierdo
-        {
-            SpawnPrefabAtCursor();
-        }
-    }
 
-    private void SpawnPrefabAtCursor()
+    public void SpawnPrefabAtCursor()
     {
         // Obtén la posición del cursor en pantalla
         Vector3 mousePosition = Input.mousePosition;
