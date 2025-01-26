@@ -24,6 +24,7 @@ public class MovimientoBurbuja : MonoBehaviour
 
     private Vector2 respawnPoint;
     private int currentSize = 1;
+    private bool movable = true;
     private Rigidbody2D burbuja;
     private CircleCollider2D burbujaCollider;
     private SpriteRenderer spriteRenderer;
@@ -54,7 +55,7 @@ public class MovimientoBurbuja : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButtonDown(0)) // Botón izquierdo del mouse
+        if (Input.GetMouseButtonDown(0) && movable) // Botón izquierdo del mouse
         {
             // Obtener la posición del clic
             Vector3 clickPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -120,8 +121,11 @@ public class MovimientoBurbuja : MonoBehaviour
 
     public void resetStage()
     {
+        movable = false;
+        burbuja.gravityScale = 0f;
         burbuja.linearVelocity = Vector2.zero;
         burbuja.angularVelocity = 0f;
+        burbuja.gravityScale = 0f;
         if (animator != null)
         {
             animator.enabled = true;
