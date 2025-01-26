@@ -10,6 +10,6 @@ public class BackgroundAttemptCounter : MonoBehaviour
     {
         attemptText = GetComponent<TextMeshProUGUI>();
         int attempts = PlayerPrefs.GetInt("CantidadIntentos", 0);
-        attemptText.text = "Intentos: " + attempts.ToString();
+        attemptText.text = "INTENTOS: " + attempts.ToString();
     }
 }
