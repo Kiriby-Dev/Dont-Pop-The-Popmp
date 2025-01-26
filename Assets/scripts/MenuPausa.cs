@@ -8,6 +8,7 @@ public class MenuPausa : MonoBehaviour
     public GameObject MenuPausaPanel; // Asigna el panel del menú de pausa en el Inspector
     private bool isPaused = false;
     private bool preventClick = false; // Nueva bandera para evitar clics
+    public string uniqueName = "UniquePrefab";
 
     void Update()
     {
@@ -53,7 +54,9 @@ public class MenuPausa : MonoBehaviour
     public void LoadMainMenu()
     {
         PlayerPrefs.SetInt("Paused", 0);
-        Time.timeScale = 1f;                // Restaura el tiempo antes de cargar la escena
+        Time.timeScale = 1f;    // Restaura el tiempo antes de cargar la escena
+        GameObject existingObject = GameObject.Find(uniqueName);
+        Destroy(existingObject);
         SceneManager.LoadScene("MenuInicio"); // Cambia "MenuInicio" por el nombre de tu escena del menú principal
         timer.ReiniciarContador();
     }

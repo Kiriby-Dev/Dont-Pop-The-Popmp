@@ -41,6 +41,7 @@ public class MovimientoBurbuja : MonoBehaviour
     private CircleCollider2D burbujaCollider;
     private SpriteRenderer spriteRenderer;
     private Animator animator;
+    private AudioSource audioSource;
 
     private void Awake()
     {
@@ -54,6 +55,7 @@ public class MovimientoBurbuja : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
         burbuja = GetComponent<Rigidbody2D>();
         burbujaCollider = GetComponent<CircleCollider2D>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -159,6 +161,7 @@ public class MovimientoBurbuja : MonoBehaviour
         burbuja.gravityScale = 0f;
         if (animator != null)
         {
+            audioSource.Play();
             animator.enabled = true;
             animator.SetTrigger("Explode");
         }
