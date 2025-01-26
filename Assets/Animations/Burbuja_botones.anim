@@ -6,7 +6,7 @@ AnimationClip:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Explosion_Burbuja
+  m_Name: Burbuja_botones
   serializedVersion: 7
   m_Legacy: 0
   m_Compressed: 0
@@ -96,14 +96,7 @@ AnimationClip:
     intParameter: 0
     messageOptions: 0
   - time: 0
-    functionName: 
-    data: 
-    objectReferenceParameter: {fileID: 0}
-    floatParameter: 0
-    intParameter: 0
-    messageOptions: 0
-  - time: 0.5
-    functionName: OnExplosionEnd
+    functionName: OnUnpause
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0

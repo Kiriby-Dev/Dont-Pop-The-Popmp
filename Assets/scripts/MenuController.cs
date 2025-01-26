@@ -6,7 +6,7 @@ public class MenuController : MonoBehaviour
     // Función para cargar el nivel de juego
     public void Jugar()
     {
-        SceneManager.LoadScene("Mello"); // Cambia "NombreDeTuEscenaDeJuego" al nombre exacto de tu escena
+        SceneManager.LoadScene("Nivel1"); // Cambia "NombreDeTuEscenaDeJuego" al nombre exacto de tu escena
     }
 
     // Función para salir del juego
