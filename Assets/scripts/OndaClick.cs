@@ -1,22 +1,20 @@
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 public class OndaClick : MonoBehaviour
 {
     [SerializeField] private GameObject prefab; // Prefab que deseas instanciar
     [SerializeField] private float tiempoAnimacion = 0.6f;
-    private MenuPausa menuPausa; // Referencia al script de pausa
+    private MenuPausa menuPausa;
 
     private void Start()
     {
-        // Busca el script MenuPausa en la escena
         menuPausa = FindFirstObjectByType<MenuPausa>();
     }
 
     void Update()
     {
-        // Verifica si el juego no está pausado y si el clic no es sobre la UI
-        if (!menuPausa.IsPaused() && Input.GetMouseButtonDown(0) && !IsPointerOverUI())
+        // Detecta si se hace clic izquierdo y no está en pausa o bloqueado
+        if (!menuPausa.IsPaused() && !menuPausa.PreventClick() && Input.GetMouseButtonDown(0)) // 0 es clic izquierdo
         {
             SpawnPrefabAtCursor();
         }
@@ -32,15 +30,9 @@ public class OndaClick : MonoBehaviour
         Vector3 worldPosition = Camera.main.ScreenToWorldPoint(mousePosition);
 
         // Instancia el prefab en la posición calculada
-        GameObject spawnedPrefab = Instantiate(prefab, worldPosition, Quaternion.identity);
+        GameObject spawnedPrefab = Instantiate(prefab, worldPosition, Quaternion.identity); // Usa Quaternion.identity para rotación
 
-        // Destruye el prefab instanciado después de un tiempo
+        // Destruye el prefab instanciado después del tiempo especificado
         Destroy(spawnedPrefab, tiempoAnimacion);
-    }
-
-    private bool IsPointerOverUI()
-    {
-        // Retorna true si el cursor está sobre un elemento de la interfaz de usuario
-        return EventSystem.current != null && EventSystem.current.IsPointerOverGameObject();
     }
 }
