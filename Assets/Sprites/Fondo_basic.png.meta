@@ -1,16 +1,10 @@
 fileFormatVersion: 2
-guid: 10b720b62239a8d4aa22ef0f632208e4
+guid: 616c5f64effadf14db0987f1a805938a
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -2538037334628935444
-    second: Burbuja_v2_0
-  - first:
-      213: 8077627748411865982
-    second: Burbuja_v2_1
-  - first:
-      213: 5115770162323887539
-    second: Burbuja_v2_2
+      213: -6765094485910850557
+    second: Fondo_basic_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -119,13 +113,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Burbuja_v2_0
+      name: Fondo_basic_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 16
-        height: 16
+        width: 80
+        height: 460
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -134,52 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: ce853c2cd7417ccd0800000000000000
-      internalID: -2538037334628935444
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Burbuja_v2_1
-      rect:
-        serializedVersion: 2
-        x: 16
-        y: 0
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: fbb5a7822fd1cdb4baa9723b5843f175
-      internalID: 1393552171
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Burbuja_v2_2
-      rect:
-        serializedVersion: 2
-        x: 32
-        y: 0
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: a9706fc2852dd23418c9bfcfcadd0b91
-      internalID: -1288585845
+      spriteID: 3047457786e8d12a0800000000000000
+      internalID: -6765094485910850557
       vertices: []
       indices: 
       edges: []
@@ -188,7 +138,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: e621df0e7a684d84cb1d046b0a512a42
+    spriteID: 
     internalID: 0
     vertices: []
     indices: 
@@ -198,9 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Burbuja_v2_0: -2538037334628935444
-      Burbuja_v2_1: 1393552171
-      Burbuja_v2_2: -1288585845
+      Fondo_basic_0: -6765094485910850557
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
