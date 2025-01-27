@@ -484,15 +484,15 @@ MonoBehaviour:
   textoTiempo: {fileID: 903616263}
   textoPuntuacion: {fileID: 1846863519}
   textoNota: {fileID: 658443858}
-  puntuacionPorSegundo: 100
+  puntuacionPorSegundo: 1000
   puntuacionPorBurbuja: 100
   velocidadIncremento: 0.01
-  puntuacionS: 530
-  puntuacionA: 480
-  puntuacionB: 430
-  puntuacionC: 350
-  puntuacionD: 280
-  puntuacionE: 180
+  puntuacionS: 6000
+  puntuacionA: 5000
+  puntuacionB: 4000
+  puntuacionC: 3000
+  puntuacionD: 2000
+  puntuacionE: 1000
   burbuja1: {fileID: 920587650}
   burbuja2: {fileID: 538909946}
   burbuja3: {fileID: 554927033}
