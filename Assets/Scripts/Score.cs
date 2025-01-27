@@ -56,13 +56,13 @@ public class Score : MonoBehaviour
             textoTiempo.text = "TIEMPO: " + (tiempoTotal).ToString("F2");
         }
 
-        if (tiempoTotal <= 58f)
+        if (tiempoTotal <= 150f)
         {
-            puntuacionFinal = Mathf.FloorToInt(567.3024f - 15.8711f * tiempoTotal + 0.1069f * ((tiempoTotal) * (tiempoTotal)));
+            puntuacionFinal = Mathf.FloorToInt(9044.5f - 119.39f * tiempoTotal + 0.404f * ((tiempoTotal) * (tiempoTotal)));
         }
         else
         {
-            puntuacionFinal = Mathf.FloorToInt(6.40f - 1 / tiempoTotal);
+            puntuacionFinal = 100;
         }
 
         // Inicia la animación de puntuación progresiva
@@ -79,7 +79,7 @@ public class Score : MonoBehaviour
     {
         for (int i = 0; i < cantBurbujas; i++)
         {
-            await Task.Delay(1000);
+            await Task.Delay(500);
             ChangeImage(burbujas[i]);
             int puntuacionPrevia = puntuacionFinal;
             puntuacionFinal += puntuacionPorBurbuja;
