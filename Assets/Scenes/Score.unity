@@ -484,15 +484,14 @@ MonoBehaviour:
   textoTiempo: {fileID: 903616263}
   textoPuntuacion: {fileID: 1846863519}
   textoNota: {fileID: 658443858}
-  puntuacionPorSegundo: 1000
   puntuacionPorBurbuja: 100
-  velocidadIncremento: 0.01
+  velocidadIncremento: 0.005
   puntuacionS: 6000
-  puntuacionA: 5000
-  puntuacionB: 4000
-  puntuacionC: 3000
-  puntuacionD: 2000
-  puntuacionE: 1000
+  puntuacionA: 4900
+  puntuacionB: 4100
+  puntuacionC: 3400
+  puntuacionD: 2300
+  puntuacionE: 800
   burbuja1: {fileID: 920587650}
   burbuja2: {fileID: 538909946}
   burbuja3: {fileID: 554927033}
@@ -511,6 +510,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   timer: {fileID: 0}
   MenuPausaPanel: {fileID: 0}
+  uniqueName: UniquePrefab
 --- !u!1 &492052760
 GameObject:
   m_ObjectHideFlags: 0

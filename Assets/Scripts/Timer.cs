@@ -8,10 +8,12 @@ public class Timer : MonoBehaviour
     public float tiempoEnSegundos = 0; // Contador de segundos
     private bool contar = true; // Bandera para detener/reanudar el contador
     private TMP_Text textoTiempo;  // Referencia a un objeto UI para mostrar el tiempo (opcional)
+    bool click;
 
     private void Awake()
     {
         textoTiempo = GetComponent<TMP_Text>();
+        click = false;
     }
 
 
@@ -19,6 +21,15 @@ public class Timer : MonoBehaviour
     // Método principal del contador usando async/await
     void Update()
     {
+        if (!click)
+        {
+            contar = false;
+        }
+        if (Input.GetMouseButton(0))
+        {
+            click = true;
+            contar = true;
+        }
             if (contar)
             {
                 tiempoEnSegundos += Time.deltaTime;

@@ -10,8 +10,7 @@ public class Score : MonoBehaviour
     [Header("Configuracion")]
     [SerializeField] private TMP_Text textoTiempo;     // Texto para mostrar el tiempo total
     [SerializeField] private TMP_Text textoPuntuacion; // Texto para mostrar la puntuación final
-    [SerializeField] private TMP_Text textoNota;
-    [SerializeField] private int puntuacionPorSegundo = 10; // Puntos por segundo de juego
+    [SerializeField] private TMP_Text textoNota; // Puntos por segundo de juego
     [SerializeField] private int puntuacionPorBurbuja = 50; // Puntos por burbuja conseguida
     [SerializeField] private float velocidadIncremento = 0.01f; // Velocidad de incremento en segundos
 
@@ -56,13 +55,13 @@ public class Score : MonoBehaviour
             textoTiempo.text = "TIEMPO: " + (tiempoTotal).ToString("F2");
         }
 
-        if (tiempoTotal <= 150f)
+        if (tiempoTotal < 148.295f)
         {
-            puntuacionFinal = Mathf.FloorToInt(9044.5f - 119.39f * tiempoTotal + 0.404f * ((tiempoTotal) * (tiempoTotal)));
+            puntuacionFinal = Mathf.FloorToInt(18759 - (3752.4f*MathF.Log(tiempoTotal)));
         }
         else
         {
-            puntuacionFinal = 100;
+            puntuacionFinal = 0;
         }
 
         // Inicia la animación de puntuación progresiva
