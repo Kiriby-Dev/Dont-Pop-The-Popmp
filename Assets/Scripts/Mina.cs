@@ -57,7 +57,7 @@ public class Mina : MonoBehaviour
         float distancia = (pos - pos_jugador).magnitude;
         if (distancia < 10)
         {
-            audioSource.volume = 2 / distancia;
+            audioSource.volume = 6 / distancia;
         }
         else
         {
