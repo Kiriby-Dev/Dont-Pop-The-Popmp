@@ -11,8 +11,9 @@ public class Score : MonoBehaviour
     [SerializeField] private TMP_Text textoTiempo;     // Texto para mostrar el tiempo total
     [SerializeField] private TMP_Text textoPuntuacion; // Texto para mostrar la puntuación final
     [SerializeField] private TMP_Text textoNota; // Puntos por segundo de juego
-    [SerializeField] private int puntuacionPorBurbuja = 50; // Puntos por burbuja conseguida
-    [SerializeField] private float velocidadIncremento = 0.01f; // Velocidad de incremento en segundos
+    [SerializeField] private int puntuacionPorBurbuja; // Puntos por burbuja conseguida
+    [SerializeField] private float velocidadIncremento; // Velocidad de incremento en segundos
+    [SerializeField] private float tiempoPuntos;
 
     [Header("Notas")]
     [SerializeField] private int puntuacionS;
@@ -105,9 +106,19 @@ public class Score : MonoBehaviour
             textoPuntuacion.text = "PUNTAJE: 0"; // Inicializa el texto
         }
 
+        // Calcular la cantidad de incrementos necesarios
+        int totalIncrementos = puntuacionFinal - puntuacionActual;
+
+        // Asegúrate de que totalIncrementos sea mayor que 0
+        if (totalIncrementos <= 0)
+            return;
+
+        // Calcular el tiempo de espera para cada incremento (total de 5 segundos)
+        float tiempoPorIncremento = tiempoPuntos / totalIncrementos;  // 5 segundos / cantidad de incrementos
+
         while (puntuacionActual < puntuacionFinal)
         {
-            // Incremento progresivo basado en un porcentaje del total
+            // Incremento progresivo
             puntuacionActual += 1;
             puntuacionActual = Mathf.Clamp(puntuacionActual, 0, puntuacionFinal);
 
@@ -118,7 +129,7 @@ public class Score : MonoBehaviour
             }
 
             // Espera antes del siguiente incremento
-            await Task.Delay((int)(velocidadIncremento * 325));
+            await Task.Delay((int)(tiempoPorIncremento * 1000));  // Convertir a milisegundos
         }
 
         // Asegúrate de que la puntuación final se muestre correctamente

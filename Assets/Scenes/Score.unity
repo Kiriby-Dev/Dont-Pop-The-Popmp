@@ -357,7 +357,6 @@ GameObject:
   - component: {fileID: 474871036}
   - component: {fileID: 474871035}
   - component: {fileID: 474871039}
-  - component: {fileID: 474871040}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -485,7 +484,8 @@ MonoBehaviour:
   textoPuntuacion: {fileID: 1846863519}
   textoNota: {fileID: 658443858}
   puntuacionPorBurbuja: 100
-  velocidadIncremento: 0.005
+  velocidadIncremento: 300
+  tiempoPuntos: 4
   puntuacionS: 6000
   puntuacionA: 4900
   puntuacionB: 4100
@@ -496,21 +496,6 @@ MonoBehaviour:
   burbuja2: {fileID: 538909946}
   burbuja3: {fileID: 554927033}
   filledBubble: {fileID: -1288585845, guid: 10b720b62239a8d4aa22ef0f632208e4, type: 3}
---- !u!114 &474871040
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 474871034}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 68d078915ad8b5a4496706a9f6afb438, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  timer: {fileID: 0}
-  MenuPausaPanel: {fileID: 0}
-  uniqueName: UniquePrefab
 --- !u!1 &492052760
 GameObject:
   m_ObjectHideFlags: 0
@@ -2269,7 +2254,6 @@ GameObject:
   - component: {fileID: 2036055678}
   - component: {fileID: 2036055677}
   - component: {fileID: 2036055676}
-  - component: {fileID: 2036055679}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -2450,7 +2434,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 474871040}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: MenuPausa, Assembly-CSharp
         m_MethodName: LoadMainMenu
         m_Mode: 1
