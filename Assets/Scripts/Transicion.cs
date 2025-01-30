@@ -5,36 +5,31 @@ using System.Collections;
 public class SceneTransition : MonoBehaviour
 {
     public CanvasGroup fadePanel; // Imagen negra con CanvasGroup
-    public ParticleSystem bubbleEffect; // Sistema de partículas
 
     public float fadeDuration = 1f; // Duración del fade
-    public float transitionDelay = 2f; // Tiempo que dura la cortina de burbujas
-    public float bubbleFadeOutDuration = 2f; // Tiempo en el que las burbujas disminuyen
+    private AsyncOperation sceneLoadOperation;
+
+    void Start()
+    {
+        sceneLoadOperation = SceneManager.LoadSceneAsync("Nivel1");
+        sceneLoadOperation.allowSceneActivation = false; // No activar aún
+    }
 
     public void StartGame()
     {
-        bubbleEffect.gameObject.SetActive(true);
         fadePanel.gameObject.SetActive(true);
 
-        StartCoroutine(TransitionToLevel("Nivel1"));
+        StartCoroutine(TransitionToLevel());
     }
 
-    IEnumerator TransitionToLevel(string sceneName)
+    IEnumerator TransitionToLevel()
     {
-        // 1. Iniciar efecto de burbujas
-        if (bubbleEffect != null)
-        {
-            bubbleEffect.Play();
-        }
 
-        // 2. Fade In (Oscurecer pantalla)
+        // Fade out de la música y pantalla
         yield return StartCoroutine(Fade(1));
 
-        // 3. Esperar mientras las burbujas cubren la pantalla
-        yield return new WaitForSeconds(transitionDelay);
-
-        // 4. Iniciar la carga asíncrona de la escena
-        yield return StartCoroutine(LoadSceneAsync(sceneName));
+        // Activar la escena precargada sin retrasos
+        sceneLoadOperation.allowSceneActivation = true;
     }
 
     IEnumerator LoadSceneAsync(string sceneName)

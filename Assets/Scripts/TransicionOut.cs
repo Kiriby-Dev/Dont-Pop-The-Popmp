@@ -13,7 +13,18 @@ public class TransicionOut: MonoBehaviour
 
     void Start()
     {
-        StartCoroutine(StartSceneTransition());
+        if (PlayerPrefs.GetInt("PrimeraVez", 1) == 1) // Solo se ejecuta la primera vez
+        {
+            PlayerPrefs.SetInt("PrimeraVez", 0); // Marcar como ya ejecutado
+            StartCoroutine(StartSceneTransition());
+        }
+        else
+        {
+            // Si no es la primera vez, asegurarse de que los efectos estén desactivados
+            fadePanel.alpha = 0;
+            bubbleEffect.gameObject.SetActive(false);
+            fadePanel.gameObject.SetActive(false);
+        }
     }
 
     IEnumerator StartSceneTransition()
