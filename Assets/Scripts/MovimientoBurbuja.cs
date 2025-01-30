@@ -1,4 +1,5 @@
 using System;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -13,6 +14,15 @@ public class MovimientoBurbuja : MonoBehaviour
     [SerializeField] private float waterResistance = 2f; // Resistencia del agua
     [SerializeField] private float gravedad = -0.05f; // Fuerza con la que sube la burbuja
 
+    [Header("Cooldowns")]
+    [SerializeField] private float delay = 0.01f;
+    [SerializeField] private float clickCooldown = 0.4f;
+    [SerializeField] private float timerCooldown = 0;
+
+    private bool isWaiting = false;
+    private float timer;
+    private Vector3 direction;
+
     [Header("Mejoras de movimiento")]
     [SerializeField] private float speedIncrease = 2f;
     [SerializeField] private float rotationIncrease = 2f;
@@ -22,12 +32,16 @@ public class MovimientoBurbuja : MonoBehaviour
     [SerializeField] private Sprite bigBubble;
     [SerializeField] private Sprite goldenBubble;
 
+    [SerializeField] private GameObject prefabMasCien;
+
+    private OndaClick scriptCamara;
     private int currentSize = 1;
     private bool movable = true;
     private Rigidbody2D burbuja;
     private CircleCollider2D burbujaCollider;
     private SpriteRenderer spriteRenderer;
     private Animator animator;
+    private AudioSource audioSource;
 
     private void Awake()
     {
@@ -36,10 +50,12 @@ public class MovimientoBurbuja : MonoBehaviour
         {
             animator.enabled = false;
         }
+
+        scriptCamara = Camera.main.GetComponent<OndaClick>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         burbuja = GetComponent<Rigidbody2D>();
         burbujaCollider = GetComponent<CircleCollider2D>();
-        GameObject respawnObject = GameObject.FindGameObjectWithTag("Respawn");
+        audioSource = GetComponent<AudioSource>();
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -48,14 +64,20 @@ public class MovimientoBurbuja : MonoBehaviour
         burbuja.gravityScale = gravedad;
         setWaterResistance();
         PlayerPrefs.SetInt("CantidadBurbujas", 0);
-        PlayerPrefs.Save();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButtonDown(0) && movable) // Botón izquierdo del mouse
+        timerCooldown -= Time.deltaTime;
+
+        int paused = PlayerPrefs.GetInt("Paused", 0);
+
+        if (Input.GetMouseButtonDown(0) && movable && paused == 0 && timerCooldown <= 0)
         {
+            timerCooldown = clickCooldown;
+            scriptCamara.SpawnPrefabAtCursor();
+
             // Obtener la posición del clic
             Vector3 clickPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             clickPosition.z = 0f;
@@ -63,24 +85,36 @@ public class MovimientoBurbuja : MonoBehaviour
             // Obtener la posición actual del objeto
             Vector3 objectPosition = transform.position;
 
-            Vector3 direction = objectPosition - clickPosition;
+            direction = objectPosition - clickPosition;
 
             float distance = direction.magnitude;
 
-            if (distance < maxDistance) 
-            { 
-                // Aplicar fuerza al Rigidbody2D en la dirección opuesta
-                burbuja.AddForce(direction.normalized * pushForce / direction.magnitude, ForceMode2D.Impulse);
-                burbuja.angularVelocity = rotationSpeed / distance;
+            if (distance < maxDistance)
+            {
+                isWaiting = true;
+                timer = delay * distance; // Configurar el temporizador
             }
         }
 
-        // Limitar la velocidad máxima del Rigidbody2D
+        if (isWaiting)
+        {
+            timer -= Time.deltaTime;
+            if (timer < 0f)
+                {
+                    float distance = direction.magnitude;
+                    burbuja.AddForce(direction.normalized * pushForce / direction.magnitude, ForceMode2D.Impulse);
+                    burbuja.angularVelocity = rotationSpeed / distance;
+                    isWaiting = false;
+                }
+        }
+
+        // Limitar la velocidad máxima
         if (burbuja.linearVelocity.magnitude > maxSpeed)
         {
             burbuja.linearVelocity = burbuja.linearVelocity.normalized * maxSpeed;
         }
 
+        // Limitar la velocidad de rotación máxima
         if (burbuja.angularVelocity > maxRotation)
         {
             burbuja.angularVelocity = maxRotation;
@@ -102,6 +136,8 @@ public class MovimientoBurbuja : MonoBehaviour
         if (collision.CompareTag("BurbujaChica"))
         {
             agrandarBurbuja();
+            GameObject masCien = Instantiate(prefabMasCien);
+            masCien.transform.position = transform.position;
             int cantBurbujas = PlayerPrefs.GetInt("CantidadBurbujas", 0);
             cantBurbujas++;
             PlayerPrefs.SetInt("CantidadBurbujas", cantBurbujas);
@@ -125,6 +161,7 @@ public class MovimientoBurbuja : MonoBehaviour
         burbuja.gravityScale = 0f;
         if (animator != null)
         {
+            audioSource.Play();
             animator.enabled = true;
             animator.SetTrigger("Explode");
         }

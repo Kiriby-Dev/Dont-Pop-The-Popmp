@@ -2,6 +2,7 @@ using System;
 using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class Score : MonoBehaviour
@@ -9,8 +10,7 @@ public class Score : MonoBehaviour
     [Header("Configuracion")]
     [SerializeField] private TMP_Text textoTiempo;     // Texto para mostrar el tiempo total
     [SerializeField] private TMP_Text textoPuntuacion; // Texto para mostrar la puntuación final
-    [SerializeField] private TMP_Text textoNota;
-    [SerializeField] private int puntuacionPorSegundo = 10; // Puntos por segundo de juego
+    [SerializeField] private TMP_Text textoNota; // Puntos por segundo de juego
     [SerializeField] private int puntuacionPorBurbuja = 50; // Puntos por burbuja conseguida
     [SerializeField] private float velocidadIncremento = 0.01f; // Velocidad de incremento en segundos
 
@@ -32,7 +32,7 @@ public class Score : MonoBehaviour
     private SpriteRenderer spriteRenderer;
 
     private int puntuacionFinal; // Puntuación total calculada
-    private int tiempoTotal;
+    private float tiempoTotal;
 
     private void Awake()
     {
@@ -42,7 +42,7 @@ public class Score : MonoBehaviour
     private void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
-        tiempoTotal = PlayerPrefs.GetInt("TiempoTotal", 0);
+        tiempoTotal = PlayerPrefs.GetFloat("TiempoTotal", 0);
         MostrarPantallaFinal();
     }
 
@@ -52,11 +52,17 @@ public class Score : MonoBehaviour
         // Muestra el tiempo total del jugador
         if (textoTiempo != null)
         {
-            textoTiempo.text = "TIEMPO: " + (tiempoTotal / 100f).ToString();
+            textoTiempo.text = "TIEMPO: " + (tiempoTotal).ToString("F2");
         }
 
-        // Calcula la puntuación final basada en el tiempo
-        puntuacionFinal = Mathf.FloorToInt(567.3024f - 15.8711f * tiempoTotal/100 + 0.1069f * (tiempoTotal/100 ^ 2));
+        if (tiempoTotal < 148.295f)
+        {
+            puntuacionFinal = Mathf.FloorToInt(18759 - (3752.4f*MathF.Log(tiempoTotal)));
+        }
+        else
+        {
+            puntuacionFinal = 0;
+        }
 
         // Inicia la animación de puntuación progresiva
         await MostrarPuntuacionProgresivamente(0);
@@ -72,7 +78,7 @@ public class Score : MonoBehaviour
     {
         for (int i = 0; i < cantBurbujas; i++)
         {
-            await Task.Delay(1000);
+            await Task.Delay(500);
             ChangeImage(burbujas[i]);
             int puntuacionPrevia = puntuacionFinal;
             puntuacionFinal += puntuacionPorBurbuja;
@@ -151,5 +157,14 @@ public class Score : MonoBehaviour
         {
             return "F";  // Reprobado
         }
+    }
+
+    public void RestartGame()
+    {
+        PlayerPrefs.SetInt("Paused", 0);
+        SceneManager.LoadScene("Nivel1");
+        Time.timeScale = 1f;
+        PlayerPrefs.SetInt("CantidadIntentos", 0);
+        PlayerPrefs.Save();
     }
 }
