@@ -5122,6 +5122,7 @@ RectTransform:
   - {fileID: 1710688798}
   - {fileID: 131850966}
   - {fileID: 181195314}
+  - {fileID: 1956440901}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -5379,7 +5380,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 1
   amplitud: 20
-  altura: -180
+  altura: 210
   boton: {fileID: 131850965}
 --- !u!1 &181195313
 GameObject:
@@ -6725,7 +6726,7 @@ GameObject:
   - component: {fileID: 1956440901}
   - component: {fileID: 1956440900}
   m_Layer: 0
-  m_Name: titulo_v5
+  m_Name: Titulo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6794,12 +6795,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1956440899}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3, y: 0.5, z: 0}
-  m_LocalScale: {x: 2.4496, y: 2.4496, z: 2.4496}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -325.70078, y: 54.283463, z: -9771.023}
+  m_LocalScale: {x: 265.94553, y: 265.94553, z: 265.94553}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 69012136}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2010816023
 GameObject:
@@ -7036,4 +7037,3 @@ SceneRoots:
   - {fileID: 16299575}
   - {fileID: 292632418}
   - {fileID: 1722461097}
-  - {fileID: 1956440901}

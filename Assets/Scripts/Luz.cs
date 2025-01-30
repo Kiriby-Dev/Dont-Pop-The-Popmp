@@ -9,6 +9,7 @@ public class Luz : MonoBehaviour
     [SerializeField] private float intensityIncrease = 1.0f;
     [SerializeField] private float radiusIncrease = 1.0f;
     [SerializeField] private string hexColor = "#020202"; // Color en formato hexadecimal
+    [SerializeField] private GameObject minasCueva;
     private Collider2D triggerCollider;
 
     private void Awake()
@@ -20,6 +21,7 @@ public class Luz : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
+            minasCueva.SetActive(true);
             if (ColorUtility.TryParseHtmlString(hexColor, out Color parsedColor))
             {
                 globalLight.color = parsedColor; // Cambiar el color de la luz
