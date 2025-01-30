@@ -5,6 +5,7 @@ public class ControlAudioPausa : MonoBehaviour
 {
     public Slider slider;
     public float sliderValue;
+    private float lastVolume = 1f; // Guardar el último volumen antes de mutear
     public Button muteButton;
     public Sprite unmutedSprite, mutedSprite;
     private bool isMute = false;
@@ -39,14 +40,14 @@ public class ControlAudioPausa : MonoBehaviour
         isMute = !isMute;
         if (isMute)
         {
-            sliderValue = slider.value; // Guarda el valor antes de mutear
+            lastVolume = slider.value > 0 ? slider.value : lastVolume; // Guarda el volumen solo si es mayor a 0
             slider.value = 0;
             AudioListener.volume = 0;
         }
         else
         {
-            slider.value = sliderValue; // Restaura el volumen anterior
-            AudioListener.volume = sliderValue;
+            slider.value = lastVolume; // Restaura el volumen anterior
+            AudioListener.volume = lastVolume;
         }
         PlayerPrefs.SetFloat("valorAudio", slider.value);
         RevisarSiEstoyMute();
