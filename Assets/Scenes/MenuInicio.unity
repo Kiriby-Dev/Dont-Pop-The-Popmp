@@ -5266,9 +5266,9 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 69012136}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.5}
-  m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 1405, y: 210}
+  m_AnchorMin: {x: 1, y: 0.5}
+  m_AnchorMax: {x: 1, y: 0.5}
+  m_AnchoredPosition: {x: -339, y: 210}
   m_SizeDelta: {x: 300, y: 300}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &131850967
@@ -5379,7 +5379,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 1
   amplitud: 20
-  altura: -180
+  altura: 210
   boton: {fileID: 131850965}
 --- !u!1 &181195313
 GameObject:
@@ -6547,8 +6547,8 @@ MonoBehaviour:
   fadePanel: {fileID: 292632412}
   bubbleEffect: {fileID: 16299573}
   fadeDuration: 1
-  transitionDelay: 2
-  bubbleFadeOutDuration: 2
+  transitionDelay: 1
+  bubbleFadeOutDuration: 1
 --- !u!4 &1722461097
 Transform:
   m_ObjectHideFlags: 0
