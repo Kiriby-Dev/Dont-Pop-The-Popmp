@@ -3,7 +3,7 @@ using System.Collections;
 using UnityEngine.InputSystem;
 using UnityEngine.EventSystems;
 
-public class SceneStartTransition : MonoBehaviour
+public class TransicionOut: MonoBehaviour
 {
     public CanvasGroup fadePanel; // Arrastra aquí la imagen negra con CanvasGroup
     public ParticleSystem bubbleEffect; // Arrastra aquí el sistema de partículas
