@@ -178,4 +178,9 @@ public class Score : MonoBehaviour
         PlayerPrefs.SetInt("CantidadIntentos", 0);
         PlayerPrefs.Save();
     }
+
+    public void LoadMenuInicial()
+    {
+       SceneManager.LoadScene("MenuInicio");
+    }
 }
