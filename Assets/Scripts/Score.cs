@@ -235,6 +235,6 @@ public class Score : MonoBehaviour
     {
         PlayerPrefs.SetInt("Paused", 0);
         Time.timeScale = 1f;    // Restaura el tiempo antes de cargar la escena
-        SceneManager.LoadScene("MenuInicio");
+        SceneManager.LoadScene("MenuNiveles");
     }
 }

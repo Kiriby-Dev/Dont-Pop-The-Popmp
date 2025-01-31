@@ -1228,7 +1228,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1303321302}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2051411888}
+        m_TargetAssemblyTypeName: LevelCarousel, Assembly-CSharp
+        m_MethodName: NextLevel
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1303321302
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1970,7 +1982,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1872145680}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2051411888}
+        m_TargetAssemblyTypeName: LevelCarousel, Assembly-CSharp
+        m_MethodName: PreviousLevel
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1872145680
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2360,9 +2384,15 @@ MonoBehaviour:
   - {fileID: 276084423}
   - {fileID: 236757343}
   - {fileID: 870941602}
-  nextButton: {fileID: 0}
-  prevButton: {fileID: 0}
+  prevButton: {fileID: 1872145679}
+  nextButton: {fileID: 1303321301}
   snapSpeed: 10
+  levelScenes:
+  - Tutorial
+  - Nivel1
+  - Nivel2
+  - Nivel3
+  - Nivel4
 --- !u!1 &2132526941
 GameObject:
   m_ObjectHideFlags: 0

@@ -14,16 +14,21 @@ public class LevelCarousel : MonoBehaviour
     private int currentIndex = 0;
     private bool dragging = false;
 
+    // Arreglo de nombres de escenas para cada nivel
+    public string[] levelScenes;
+
     void Start()
     {
         totalLevels = levelButtons.Length;
         positions = new float[totalLevels];
 
-        // Configurar posiciones centradas
+        // Configurar posiciones centradas y asociar las escenas a los botones
         for (int i = 0; i < totalLevels; i++)
         {
             positions[i] = (float)i / (totalLevels - 1);
-            int levelIndex = i + 1;
+            int levelIndex = i; // Guardamos el índice de nivel para usarlo en el callback
+
+            // Asociamos la acción de carga de nivel a cada botón
             levelButtons[i].onClick.AddListener(() => LoadLevel(levelIndex));
         }
 
@@ -76,10 +81,18 @@ public class LevelCarousel : MonoBehaviour
         nextButton.gameObject.SetActive(currentIndex < totalLevels - 1);  // Solo visible si no es el último nivel
     }
 
-    void LoadLevel(int level)
+    // Modificado: Cargar nivel a partir del índice de la escena
+    void LoadLevel(int levelIndex)
     {
-        Debug.Log("Cargando Nivel " + level);
-        SceneManager.LoadScene("Nivel" + level);
+        if (levelScenes.Length > levelIndex)
+        {
+            Debug.Log("Cargando Nivel: " + levelScenes[levelIndex]);
+            SceneManager.LoadScene(levelScenes[levelIndex]);
+        }
+        else
+        {
+            Debug.LogError("Escena no encontrada para el índice: " + levelIndex);
+        }
     }
 
     // Funciones de avance y retroceso
