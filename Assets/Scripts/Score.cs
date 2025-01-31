@@ -11,16 +11,16 @@ public class Score : MonoBehaviour
     [SerializeField] private TMP_Text textoPuntuacion; // Texto para mostrar la puntuación final
     [SerializeField] private TMP_Text textoNota;       // Texto para la nota final
     [SerializeField] private int puntuacionPorBurbuja; // Puntos por cada burbuja obtenida
-    [SerializeField] private float tiempoPuntos;       // Tiempo total en el que debe sumarse el puntaje
-    [SerializeField] private float tiempoPuntosBurbujas;
+    [SerializeField] private float tiempoPuntos = 3f;       // Tiempo total en el que debe sumarse el puntaje
+    [SerializeField] private float tiempoPuntosBurbujas = 0.75f;
 
     [Header("Notas")]
-    [SerializeField] private int puntuacionS;
-    [SerializeField] private int puntuacionA;
-    [SerializeField] private int puntuacionB;
-    [SerializeField] private int puntuacionC;
-    [SerializeField] private int puntuacionD;
-    [SerializeField] private int puntuacionE;
+    [SerializeField] private int puntuacionS = 6000;
+    [SerializeField] private int puntuacionA = 4900;
+    [SerializeField] private int puntuacionB = 4100;
+    [SerializeField] private int puntuacionC = 3400;
+    [SerializeField] private int puntuacionD = 2300;
+    [SerializeField] private int puntuacionE = 800;
 
     [Header("Burbujas")]
     [SerializeField] private Image burbuja1;
@@ -44,12 +44,6 @@ public class Score : MonoBehaviour
 
     private void Start()
     {
-        // Datos de ejemplo (BORRAR en versión final)
-        PlayerPrefs.SetFloat("TiempoTotal", 30f);
-        PlayerPrefs.SetInt("CantidadBurbujas", 3);
-
-        audioBurbuja = GetComponent<AudioSource>();
-        audioPuntos = GetComponent<AudioSource>();
         tiempoTotal = PlayerPrefs.GetFloat("TiempoTotal", 0);
         StartCoroutine(MostrarPantallaFinal());
     }
@@ -81,12 +75,14 @@ public class Score : MonoBehaviour
         int cantBurbujas = PlayerPrefs.GetInt("CantidadBurbujas", 0);
         yield return StartCoroutine(AgregarPuntosBurbujas(cantBurbujas));
 
-        audioBurbuja.Pause();
+        audioPuntos.Pause();
 
         // Mostrar la nota final
         if (textoNota != null)
         {
             textoNota.text = NotaFinal(puntuacionFinal);
+            audioBurbuja.Play();
+            StartCoroutine(AnimacionEscala(textoNota.transform));
         }
     }
 
@@ -96,13 +92,13 @@ public class Score : MonoBehaviour
         {
             if (i < 2)
             {
-                StartCoroutine(ChangeImage(burbujas[i], filledBubble));
+                ChangeImage(burbujas[i], filledBubble);
             } 
             else 
             {
-                StartCoroutine(ChangeImage(burbujas[0], goldenBubble));
-                StartCoroutine(ChangeImage(burbujas[1], goldenBubble));
-                StartCoroutine(ChangeImage(burbujas[2], goldenBubble));
+                ChangeImage(burbujas[0], goldenBubble);
+                ChangeImage(burbujas[1], goldenBubble);
+                ChangeImage(burbujas[2], goldenBubble);
             }
 
             int puntuacionPrevia = puntuacionFinal;
@@ -144,7 +140,7 @@ public class Score : MonoBehaviour
         }
     }
 
-    private IEnumerator ChangeImage(Image target, Sprite sprite)
+    private void ChangeImage(Image target, Sprite sprite)
     {
         if (target != null)
         {
@@ -155,40 +151,45 @@ public class Score : MonoBehaviour
 
             target.sprite = sprite;
 
-            // Guardamos el tamaño original
-            Vector3 originalScale = target.transform.localScale;
+            StartCoroutine(AnimacionEscala(target.transform));
 
-            // Tamaño agrandado (10% más grande)
-            Vector3 enlargedScale = originalScale * 1.2f;
-
-            float duration = 0.2f; // Duración total de la animación
-            float elapsedTime = 0f;
-
-            // Animación de agrandamiento
-            while (elapsedTime < duration)
-            {
-                elapsedTime += Time.deltaTime;
-                float progress = elapsedTime / duration;
-                target.transform.localScale = Vector3.Lerp(originalScale, enlargedScale, progress);
-                yield return null;
-            }
-
-            // Resetear el tiempo
-            elapsedTime = 0f;
-
-            // Animación de reducción al tamaño original
-            while (elapsedTime < duration)
-            {
-                elapsedTime += Time.deltaTime;
-                float progress = elapsedTime / duration;
-                target.transform.localScale = Vector3.Lerp(enlargedScale, originalScale, progress);
-                yield return null;
-            }
-
-            // Asegurar que el tamaño final sea el original
-            target.transform.localScale = originalScale;
         }
     }
+
+    private IEnumerator AnimacionEscala(Transform target)
+    {
+        if (target == null) yield break; // Evita errores si el target es nulo
+
+        Vector3 originalScale = target.localScale;
+        Vector3 enlargedScale = originalScale * 1.2f;
+
+        float duration = 0.2f;
+        float elapsedTime = 0f;
+
+        // Agrandar
+        while (elapsedTime < duration)
+        {
+            elapsedTime += Time.deltaTime;
+            float progress = elapsedTime / duration;
+            target.localScale = Vector3.Lerp(originalScale, enlargedScale, progress);
+            yield return null;
+        }
+
+        // Resetear el tiempo
+        elapsedTime = 0f;
+
+        // Reducir
+        while (elapsedTime < duration)
+        {
+            elapsedTime += Time.deltaTime;
+            float progress = elapsedTime / duration;
+            target.localScale = Vector3.Lerp(enlargedScale, originalScale, progress);
+            yield return null;
+        }
+
+        target.localScale = originalScale;
+    }
+
 
     private string NotaFinal(int puntuacion)
     {
@@ -220,5 +221,20 @@ public class Score : MonoBehaviour
         {
             return "F";  // Reprobado
         }
+    }
+
+    public void RestartGame()
+    {
+        PlayerPrefs.SetInt("Paused", 0);
+        SceneManager.LoadScene("Nivel1");
+        Time.timeScale = 1f;
+        PlayerPrefs.SetInt("CantidadIntentos", 0);
+    }
+
+    public void LoadMainMenu()
+    {
+        PlayerPrefs.SetInt("Paused", 0);
+        Time.timeScale = 1f;    // Restaura el tiempo antes de cargar la escena
+        SceneManager.LoadScene("MenuInicio");
     }
 }
