@@ -1,5 +1,4 @@
-using System;
-using System.Threading.Tasks;
+锘縰sing System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -7,13 +6,13 @@ using UnityEngine.UI;
 
 public class Score : MonoBehaviour
 {
-    [Header("Configuracion")]
+    [Header("Configuraci贸n")]
     [SerializeField] private TMP_Text textoTiempo;     // Texto para mostrar el tiempo total
-    [SerializeField] private TMP_Text textoPuntuacion; // Texto para mostrar la puntuaci髇 final
-    [SerializeField] private TMP_Text textoNota; // Puntos por segundo de juego
-    [SerializeField] private int puntuacionPorBurbuja; // Puntos por burbuja conseguida
-    [SerializeField] private float velocidadIncremento; // Velocidad de incremento en segundos
-    [SerializeField] private float tiempoPuntos;
+    [SerializeField] private TMP_Text textoPuntuacion; // Texto para mostrar la puntuaci贸n final
+    [SerializeField] private TMP_Text textoNota;       // Texto para la nota final
+    [SerializeField] private int puntuacionPorBurbuja; // Puntos por cada burbuja obtenida
+    [SerializeField] private float tiempoPuntos;       // Tiempo total en el que debe sumarse el puntaje
+    [SerializeField] private float tiempoPuntosBurbujas;
 
     [Header("Notas")]
     [SerializeField] private int puntuacionS;
@@ -29,10 +28,13 @@ public class Score : MonoBehaviour
     [SerializeField] private Image burbuja3;
     private Image[] burbujas;
     [SerializeField] private Sprite filledBubble;
+    [SerializeField] private Sprite goldenBubble;
 
-    private SpriteRenderer spriteRenderer;
+    [Header("Audio")]
+    [SerializeField] private AudioSource audioBurbuja;
+    [SerializeField] private AudioSource audioPuntos;
 
-    private int puntuacionFinal; // Puntuaci髇 total calculada
+    private int puntuacionFinal;
     private float tiempoTotal;
 
     private void Awake()
@@ -42,104 +44,154 @@ public class Score : MonoBehaviour
 
     private void Start()
     {
-        spriteRenderer = GetComponent<SpriteRenderer>();
+        // Datos de ejemplo (BORRAR en versi贸n final)
+        PlayerPrefs.SetFloat("TiempoTotal", 30f);
+        PlayerPrefs.SetInt("CantidadBurbujas", 3);
+
+        audioBurbuja = GetComponent<AudioSource>();
+        audioPuntos = GetComponent<AudioSource>();
         tiempoTotal = PlayerPrefs.GetFloat("TiempoTotal", 0);
-        MostrarPantallaFinal();
+        StartCoroutine(MostrarPantallaFinal());
     }
 
-    // M閠odo para mostrar la pantalla final
-    private async void MostrarPantallaFinal()
+    private IEnumerator MostrarPantallaFinal()
     {
-        // Muestra el tiempo total del jugador
+        // Mostrar tiempo total en UI
         if (textoTiempo != null)
         {
-            textoTiempo.text = "TIEMPO: " + (tiempoTotal).ToString("F2");
+            textoTiempo.text = "TIEMPO: " + tiempoTotal.ToString("F2");
         }
 
+        // Calcular la puntuaci贸n basada en el tiempo
         if (tiempoTotal < 148.295f)
         {
-            puntuacionFinal = Mathf.FloorToInt(18759 - (3752.4f*MathF.Log(tiempoTotal)));
+            puntuacionFinal = Mathf.FloorToInt(18759 - (3752.4f * Mathf.Log(tiempoTotal)));
         }
         else
         {
             puntuacionFinal = 0;
         }
 
-        // Inicia la animaci髇 de puntuaci髇 progresiva
-        await MostrarPuntuacionProgresivamente(0);
+        audioPuntos.Play();
 
+        // Mostrar el puntaje del tiempo
+        yield return StartCoroutine(MostrarPuntuacionProgresivamente(0, tiempoPuntos));
+
+        // Agregar puntos por burbujas con pausas entre cada una
         int cantBurbujas = PlayerPrefs.GetInt("CantidadBurbujas", 0);
+        yield return StartCoroutine(AgregarPuntosBurbujas(cantBurbujas));
 
-        await AgregarPuntosBurbujas(cantBurbujas);
+        audioBurbuja.Pause();
 
-        textoNota.text = NotaFinal(puntuacionFinal);
+        // Mostrar la nota final
+        if (textoNota != null)
+        {
+            textoNota.text = NotaFinal(puntuacionFinal);
+        }
     }
 
-    private async Task AgregarPuntosBurbujas(int cantBurbujas)
+    private IEnumerator AgregarPuntosBurbujas(int cantBurbujas)
     {
         for (int i = 0; i < cantBurbujas; i++)
         {
-            await Task.Delay(500);
-            ChangeImage(burbujas[i]);
+            if (i < 2)
+            {
+                StartCoroutine(ChangeImage(burbujas[i], filledBubble));
+            } 
+            else 
+            {
+                StartCoroutine(ChangeImage(burbujas[0], goldenBubble));
+                StartCoroutine(ChangeImage(burbujas[1], goldenBubble));
+                StartCoroutine(ChangeImage(burbujas[2], goldenBubble));
+            }
+
             int puntuacionPrevia = puntuacionFinal;
             puntuacionFinal += puntuacionPorBurbuja;
-            await MostrarPuntuacionProgresivamente(puntuacionPrevia);
-            
+
+            yield return StartCoroutine(MostrarPuntuacionProgresivamente(puntuacionPrevia, tiempoPuntosBurbujas));
         }
     }
 
-    public void ChangeImage(Image target)
-    {
-        //Image imageComponent = target.GetComponent<Image>();
-
-        if (target != null)
-        {
-            target.sprite = filledBubble;
-        }
-    }
-
-    // M閠odo para mostrar la puntuaci髇 subiendo progresivamente
-    private async Task MostrarPuntuacionProgresivamente(int puntuacionActual)
+    private IEnumerator MostrarPuntuacionProgresivamente(int puntuacionActual, float duracion)
     {
         if (textoPuntuacion != null)
         {
-            textoPuntuacion.text = "PUNTAJE: 0"; // Inicializa el texto
+            textoPuntuacion.text = $"PUNTAJE: {puntuacionActual}";
         }
 
-        // Calcular la cantidad de incrementos necesarios
-        int totalIncrementos = puntuacionFinal - puntuacionActual;
+        int puntuacionInicial = puntuacionActual;
+        int diferenciaPuntos = puntuacionFinal - puntuacionInicial;
+        float tiempoTranscurrido = 0f;
 
-        // Aseg鷕ate de que totalIncrementos sea mayor que 0
-        if (totalIncrementos <= 0)
-            return;
-
-        // Calcular el tiempo de espera para cada incremento (total de 5 segundos)
-        float tiempoPorIncremento = tiempoPuntos / totalIncrementos;  // 5 segundos / cantidad de incrementos
-
-        while (puntuacionActual < puntuacionFinal)
+        while (tiempoTranscurrido < duracion)
         {
-            // Incremento progresivo
-            puntuacionActual += 1;
-            puntuacionActual = Mathf.Clamp(puntuacionActual, 0, puntuacionFinal);
+            tiempoTranscurrido += Time.deltaTime;
+            float progreso = Mathf.Clamp01(tiempoTranscurrido / duracion);
 
-            // Actualiza el texto en la UI
+            int puntuacionInterpolada = puntuacionInicial + Mathf.RoundToInt(diferenciaPuntos * progreso);
+
             if (textoPuntuacion != null)
             {
-                textoPuntuacion.text = $"PUNTAJE: {puntuacionActual}";
+                textoPuntuacion.text = $"PUNTAJE: {puntuacionInterpolada}";
             }
 
-            // Espera antes del siguiente incremento
-            await Task.Delay((int)(tiempoPorIncremento * 1000));  // Convertir a milisegundos
+            yield return null;
         }
 
-        // Aseg鷕ate de que la puntuaci髇 final se muestre correctamente
         if (textoPuntuacion != null)
         {
             textoPuntuacion.text = $"PUNTAJE: {puntuacionFinal}";
         }
     }
 
-    private string NotaFinal(int puntuacion) {
+    private IEnumerator ChangeImage(Image target, Sprite sprite)
+    {
+        if (target != null)
+        {
+            if (audioBurbuja != null)
+            {
+                audioBurbuja.Play();
+            }
+
+            target.sprite = sprite;
+
+            // Guardamos el tama帽o original
+            Vector3 originalScale = target.transform.localScale;
+
+            // Tama帽o agrandado (10% m谩s grande)
+            Vector3 enlargedScale = originalScale * 1.2f;
+
+            float duration = 0.2f; // Duraci贸n total de la animaci贸n
+            float elapsedTime = 0f;
+
+            // Animaci贸n de agrandamiento
+            while (elapsedTime < duration)
+            {
+                elapsedTime += Time.deltaTime;
+                float progress = elapsedTime / duration;
+                target.transform.localScale = Vector3.Lerp(originalScale, enlargedScale, progress);
+                yield return null;
+            }
+
+            // Resetear el tiempo
+            elapsedTime = 0f;
+
+            // Animaci贸n de reducci贸n al tama帽o original
+            while (elapsedTime < duration)
+            {
+                elapsedTime += Time.deltaTime;
+                float progress = elapsedTime / duration;
+                target.transform.localScale = Vector3.Lerp(enlargedScale, originalScale, progress);
+                yield return null;
+            }
+
+            // Asegurar que el tama帽o final sea el original
+            target.transform.localScale = originalScale;
+        }
+    }
+
+    private string NotaFinal(int puntuacion)
+    {
         if (puntuacion >= puntuacionS)
         {
             return "S";  // Excelente
@@ -162,20 +214,11 @@ public class Score : MonoBehaviour
         }
         else if (puntuacion >= puntuacionE)
         {
-            return "E";  // Aprobado (en algunos sistemas podr韆 ser suficiente para aprobar)
+            return "E";  // Aprobado (en algunos sistemas podr铆a ser suficiente para aprobar)
         }
         else
         {
             return "F";  // Reprobado
         }
-    }
-
-    public void RestartGame()
-    {
-        PlayerPrefs.SetInt("Paused", 0);
-        SceneManager.LoadScene("Nivel1");
-        Time.timeScale = 1f;
-        PlayerPrefs.SetInt("CantidadIntentos", 0);
-        PlayerPrefs.Save();
     }
 }
