@@ -58,7 +58,7 @@ public class MenuPausa : MonoBehaviour
         Time.timeScale = 1f;    // Restaura el tiempo antes de cargar la escena
         GameObject existingObject = GameObject.Find(uniqueName);
         Destroy(existingObject);
-        SceneManager.LoadScene("MenuInicio"); // Cambia "MenuInicio" por el nombre de tu escena del menú principal
+        SceneManager.LoadScene("MenuNiveles"); // Cambia "MenuInicio" por el nombre de tu escena del menú principal
         timer.ReiniciarContador();
     }
 
@@ -66,7 +66,11 @@ public class MenuPausa : MonoBehaviour
     {
         PlayerPrefs.SetInt("Paused", 0);
         MenuPausaPanel.SetActive(false);
-        SceneManager.LoadScene("Nivel1");
+
+        // Obtener la escena actual y cargarla nuevamente
+        string currentScene = SceneManager.GetActiveScene().name;
+        SceneManager.LoadScene(currentScene);
+
         Time.timeScale = 1f;
         isPaused = false;
         timer.ReiniciarContador();

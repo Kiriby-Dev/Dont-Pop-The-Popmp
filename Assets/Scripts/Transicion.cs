@@ -8,10 +8,11 @@ public class SceneTransition : MonoBehaviour
 
     public float fadeDuration = 1f; // Duración del fade
     private AsyncOperation sceneLoadOperation;
+    [SerializeField] private string escena;
 
     void Start()
     {
-        sceneLoadOperation = SceneManager.LoadSceneAsync("Nivel1");
+        sceneLoadOperation = SceneManager.LoadSceneAsync("MenuNiveles");
         sceneLoadOperation.allowSceneActivation = false; // No activar aún
     }
 
