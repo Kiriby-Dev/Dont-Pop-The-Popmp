@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class MenuPausa : MonoBehaviour
 {
     [SerializeField] private Timer timer;
+    [SerializeField] private SceneTransition transition;
     public GameObject MenuPausaPanel; // Asigna el panel del menú de pausa en el Inspector
     private bool isPaused = false;
     private bool preventClick = false; // Nueva bandera para evitar clics
@@ -58,7 +59,7 @@ public class MenuPausa : MonoBehaviour
         Time.timeScale = 1f;    // Restaura el tiempo antes de cargar la escena
         GameObject existingObject = GameObject.Find(uniqueName);
         Destroy(existingObject);
-        SceneManager.LoadScene("MenuNiveles"); // Cambia "MenuInicio" por el nombre de tu escena del menú principal
+        transition.StartGame("MenuNiveles");
         timer.ReiniciarContador();
     }
 

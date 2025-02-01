@@ -4,11 +4,12 @@ using UnityEngine;
 
 public class LevelCarousel : MonoBehaviour
 {
-    public ScrollRect scrollRect;
-    public RectTransform content;
-    public Button[] levelButtons;
-    public Button prevButton, nextButton; // Botones de navegación
-    public float snapSpeed = 10f;
+    [SerializeField] ScrollRect scrollRect;
+    [SerializeField] RectTransform content;
+    [SerializeField] Button[] levelButtons;
+    [SerializeField] Button prevButton, nextButton; // Botones de navegación
+    [SerializeField] float snapSpeed = 10f;
+    [SerializeField] SceneTransition transicion;
     private int totalLevels;
     private float[] positions;
     private int currentIndex = 0;
@@ -86,8 +87,7 @@ public class LevelCarousel : MonoBehaviour
     {
         if (levelScenes.Length > levelIndex)
         {
-            Debug.Log("Cargando Nivel: " + levelScenes[levelIndex]);
-            SceneManager.LoadScene(levelScenes[levelIndex]);
+            transicion.StartGame(levelScenes[levelIndex]);
         }
         else
         {

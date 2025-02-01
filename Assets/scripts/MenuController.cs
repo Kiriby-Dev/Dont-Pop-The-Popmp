@@ -3,6 +3,12 @@ using UnityEngine.SceneManagement;
 
 public class MenuController : MonoBehaviour
 {
+    [SerializeField] private SceneTransition transition;
+
+    public void Jugar() {
+        transition.StartGame("MenuNiveles");
+    }
+
     // Función para salir del juego
     public void Salir()
     {

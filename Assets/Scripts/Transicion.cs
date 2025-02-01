@@ -4,20 +4,16 @@ using System.Collections;
 
 public class SceneTransition : MonoBehaviour
 {
-    public CanvasGroup fadePanel; // Imagen negra con CanvasGroup
+    [SerializeField] private CanvasGroup fadePanel; // Imagen negra con CanvasGroup
 
-    public float fadeDuration = 1f; // Duración del fade
+    [SerializeField] private float fadeDuration = 1f; // Duración del fade
     private AsyncOperation sceneLoadOperation;
-    [SerializeField] private string escena;
 
-    void Start()
+    public void StartGame(string escena)
     {
-        sceneLoadOperation = SceneManager.LoadSceneAsync("MenuNiveles");
+        sceneLoadOperation = SceneManager.LoadSceneAsync(escena);
         sceneLoadOperation.allowSceneActivation = false; // No activar aún
-    }
 
-    public void StartGame()
-    {
         fadePanel.gameObject.SetActive(true);
 
         StartCoroutine(TransitionToLevel());
