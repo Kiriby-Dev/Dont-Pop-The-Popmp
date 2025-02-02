@@ -1,40 +1,43 @@
 using UnityEngine;
 using System.Collections;
-using UnityEngine.InputSystem;
-using UnityEngine.EventSystems;
 
-public class TransicionOut: MonoBehaviour
+public class TransicionOut : MonoBehaviour
 {
-    public CanvasGroup fadePanel; // Arrastra aquí la imagen negra con CanvasGroup
-    public ParticleSystem bubbleEffect; // Arrastra aquí el sistema de partículas
-    public float fadeDuration = 1.5f; // Duración del fade
-    public float bubbleDuration = 2f; // Tiempo que duran las burbujas
+    public CanvasGroup fadePanel;
+    public ParticleSystem bubbleEffect;
+    public float fadeDuration = 1.5f;
+    public float bubbleDuration = 2f;
     public float bubbleFadeOutDuration = 2f;
+
+    private string transitionKey;
 
     void Start()
     {
-        StartCoroutine(StartSceneTransition());
+        transitionKey = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
+
+        if (PlayerPrefs.GetInt(transitionKey, 0) == 0) // Si no se ha ejecutado antes
+        {
+            PlayerPrefs.SetInt(transitionKey, 1);
+            StartCoroutine(StartSceneTransition());
+        }
+        else
+        {
+            fadePanel.gameObject.SetActive(false);
+            bubbleEffect.gameObject.SetActive(false);
+        }
     }
 
     IEnumerator StartSceneTransition()
     {
-        // 1. Iniciar burbujas
-        if (bubbleEffect != null)
-        {
-            bubbleEffect.Play();
-        }
+        if (bubbleEffect != null) bubbleEffect.Play();
 
-        // 2. Esperar antes del fade out (para que las burbujas sean visibles)
         yield return new WaitForSeconds(bubbleDuration);
 
-        // 3. Fade Out (De negro a transparente)
         yield return StartCoroutine(Fade(0));
 
         yield return StartCoroutine(FadeOutBubbles());
 
         bubbleEffect.Stop();
-
-        //bubbleEffect.gameObject.SetActive(false);
         fadePanel.gameObject.SetActive(false);
     }
 
