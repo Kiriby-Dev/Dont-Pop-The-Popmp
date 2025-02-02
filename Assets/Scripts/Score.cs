@@ -238,6 +238,8 @@ public class Score : MonoBehaviour
     {
         PlayerPrefs.SetInt("Paused", 0);
         Time.timeScale = 1f;    // Restaura el tiempo antes de cargar la escena
+        GameObject prefMenu = GameObject.Find("UniquePrefab");
+        Destroy(prefMenu);
         SceneManager.LoadScene("MenuNiveles");
     }
 }

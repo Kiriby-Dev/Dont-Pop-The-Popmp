@@ -19,6 +19,7 @@ public class TransicionIn : MonoBehaviour
         yield return new WaitForSeconds(tiempoAntesFade);
 
         yield return StartCoroutine(Fade(0));
+        yield return StartCoroutine(FadeMusica(PlayerPrefs.GetFloat("valorAudio", 1f)));
 
         //bubbleEffect.gameObject.SetActive(false);
         fadePanel.gameObject.SetActive(false);
@@ -37,5 +38,19 @@ public class TransicionIn : MonoBehaviour
         }
 
         fadePanel.alpha = targetAlpha;
+    }
+
+    IEnumerator FadeMusica(float targetVolume)
+    {
+        float startVolume = 0;
+        float elapsedTime = 0;
+
+        while (elapsedTime < fadeDuration)
+        {
+            elapsedTime += Time.deltaTime;
+            float volume = Mathf.Lerp(startVolume, targetVolume, elapsedTime / fadeDuration);
+            AudioListener.volume = volume;
+            yield return null;
+        }
     }
 }
