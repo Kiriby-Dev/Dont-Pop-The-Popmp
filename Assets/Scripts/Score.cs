@@ -81,6 +81,11 @@ public class Score : MonoBehaviour
         if (textoNota != null)
         {
             textoNota.text = NotaFinal(puntuacionFinal);
+            string nivel = PlayerPrefs.GetString("Nivel");
+            int maxScore = PlayerPrefs.GetInt("Score" + nivel, 0);
+            if (puntuacionFinal > maxScore) {
+                PlayerPrefs.SetInt("Score" + nivel, puntuacionFinal);
+            }
             audioBurbuja.Play();
             StartCoroutine(AnimacionEscala(textoNota.transform));
         }
