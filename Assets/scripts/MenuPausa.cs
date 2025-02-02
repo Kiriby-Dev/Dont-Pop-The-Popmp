@@ -59,6 +59,10 @@ public class MenuPausa : MonoBehaviour
         Time.timeScale = 1f;    // Restaura el tiempo antes de cargar la escena
         GameObject existingObject = GameObject.Find(uniqueName);
         Destroy(existingObject);
+        PlayerPrefs.SetInt("CantidadIntentos", 0);
+        string nombreEscena = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
+        PlayerPrefs.SetInt(nombreEscena, 0);
+        PlayerPrefs.Save();
         transition.StartGame("MenuNiveles");
         timer.ReiniciarContador();
     }

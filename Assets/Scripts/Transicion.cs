@@ -24,6 +24,7 @@ public class SceneTransition : MonoBehaviour
 
         // Fade out de la música y pantalla
         yield return StartCoroutine(Fade(1));
+        yield return StartCoroutine(FadeMusica(0));
 
         // Activar la escena precargada sin retrasos
         sceneLoadOperation.allowSceneActivation = true;
@@ -60,5 +61,19 @@ public class SceneTransition : MonoBehaviour
         }
 
         fadePanel.alpha = targetAlpha;
+    }
+
+    IEnumerator FadeMusica(float targetVolume)
+    {
+        float startVolume = PlayerPrefs.GetFloat("valorAudio", 1f);
+        float elapsedTime = 0;
+
+        while (elapsedTime < fadeDuration)
+        {
+            elapsedTime += Time.deltaTime;
+            float volume = Mathf.Lerp(startVolume, targetVolume, elapsedTime / fadeDuration);
+            AudioListener.volume = volume;
+            yield return null;
+        }
     }
 }

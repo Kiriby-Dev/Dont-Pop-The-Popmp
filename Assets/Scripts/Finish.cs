@@ -18,8 +18,10 @@ public class Finish : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             // Llamar a la función TerminarJuego() del componente Timer
+            PlayerPrefs.SetString("LastLevel", SceneManager.GetActiveScene().name);
             timerScript.TerminarJuego();
             SceneManager.LoadScene("Score");
         }
     }
+
 }

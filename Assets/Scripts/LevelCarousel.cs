@@ -88,6 +88,8 @@ public class LevelCarousel : MonoBehaviour
         if (levelScenes.Length > levelIndex)
         {
             transicion.StartGame(levelScenes[levelIndex]);
+            GameObject prefMenu = GameObject.Find("UniquePrefab");
+            Destroy(prefMenu);
         }
         else
         {
