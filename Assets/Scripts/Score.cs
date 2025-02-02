@@ -223,13 +223,16 @@ public class Score : MonoBehaviour
         }
     }
 
+   
     public void RestartGame()
     {
         PlayerPrefs.SetInt("Paused", 0);
-        SceneManager.LoadScene("Nivel1");
+        string lastLevel = PlayerPrefs.GetString("LastLevel", "Nivel1"); // Si no hay datos, vuelve a Nivel1
+        SceneManager.LoadScene(lastLevel);
         Time.timeScale = 1f;
         PlayerPrefs.SetInt("CantidadIntentos", 0);
     }
+ 
 
     public void LoadMainMenu()
     {
