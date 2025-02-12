@@ -80,11 +80,21 @@ public class Score : MonoBehaviour
         // Mostrar la nota final
         if (textoNota != null)
         {
-            textoNota.text = NotaFinal(puntuacionFinal);
+            string notaFinal = NotaFinal(puntuacionFinal);
+            textoNota.text = notaFinal;
             string nivel = PlayerPrefs.GetString("Nivel");
             int maxScore = PlayerPrefs.GetInt("Score" + nivel, 0);
+            float bestTime = PlayerPrefs.GetFloat("Time" + nivel, 0);
             if (puntuacionFinal > maxScore) {
                 PlayerPrefs.SetInt("Score" + nivel, puntuacionFinal);
+                PlayerPrefs.SetString("Grade" + nivel, notaFinal);
+            }
+
+            if (tiempoTotal != 0 && bestTime == 0) {
+                PlayerPrefs.SetFloat("Time" + nivel, tiempoTotal);
+            }
+            if (tiempoTotal < bestTime) {
+                PlayerPrefs.SetFloat("Time" + nivel, tiempoTotal);
             }
             audioBurbuja.Play();
             StartCoroutine(AnimacionEscala(textoNota.transform));

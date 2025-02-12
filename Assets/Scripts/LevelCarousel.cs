@@ -85,17 +85,24 @@ public class LevelCarousel : MonoBehaviour
     // Modificado: Cargar nivel a partir del índice de la escena
     void LoadLevel(int levelIndex)
     {
-        if (levelScenes.Length > levelIndex)
+        string nivel = levelIndex.ToString();
+        int levelUnlock = PlayerPrefs.GetInt("Unlocked" + nivel, 0); // Valor por defecto 0 (bloqueado)
+
+        if (levelScenes.Length > levelIndex && levelUnlock == 1)
         {
             transicion.StartGame(levelScenes[levelIndex]);
-            string nivel = levelIndex.ToString();
             PlayerPrefs.SetString("Nivel", nivel);
+            PlayerPrefs.Save();
+
             GameObject prefMenu = GameObject.Find("UniquePrefab");
-            Destroy(prefMenu);
+            if (prefMenu != null)
+            {
+                Destroy(prefMenu);
+            }
         }
         else
         {
-            Debug.LogError("Escena no encontrada para el índice: " + levelIndex);
+            Debug.LogError("Nivel bloqueado o escena no encontrada para el índice: " + levelIndex);
         }
     }
 
