@@ -34,9 +34,10 @@ public class PortadaNiveles : MonoBehaviour
         {
             int nivelAnterior = nivelInt - 1;
             string notaAnterior = PlayerPrefs.GetString("Grade" + nivelAnterior, "F");
+            int unlock = PlayerPrefs.GetInt("Unlocked" + nivel);
 
             // Solo desbloquear si la nota del nivel anterior es "A" o "S"
-            if (notaAnterior == "A" || notaAnterior == "S")
+            if (notaAnterior == "A" || notaAnterior == "S" || unlock == 1)
             {
                 PlayerPrefs.SetInt("Unlocked" + nivel, 1);
                 PlayerPrefs.Save();
