@@ -233,4 +233,3 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fadePanel: {fileID: 7039389330692413522}
   fadeDuration: 1
-  escena: MenuNiveles
