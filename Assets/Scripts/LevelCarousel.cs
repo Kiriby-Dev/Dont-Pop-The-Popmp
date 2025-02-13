@@ -10,6 +10,7 @@ public class LevelCarousel : MonoBehaviour
     [SerializeField] Button prevButton, nextButton; // Botones de navegación
     [SerializeField] float snapSpeed = 10f;
     [SerializeField] SceneTransition transicion;
+    [SerializeField] GameObject cartel;
     private int totalLevels;
     private float[] positions;
     private int currentIndex = 0;
@@ -102,8 +103,17 @@ public class LevelCarousel : MonoBehaviour
         }
         else
         {
-            Debug.LogError("Nivel bloqueado o escena no encontrada para el índice: " + levelIndex);
+            cartel.SetActive(true);
+            prevButton.gameObject.SetActive(false);
+            nextButton.gameObject.SetActive(false);
         }
+    }
+
+    public void CerrarCartel() 
+    {
+        cartel.SetActive(false);
+        prevButton.gameObject.SetActive(true);
+        nextButton.gameObject.SetActive(true);
     }
 
     // Funciones de avance y retroceso
