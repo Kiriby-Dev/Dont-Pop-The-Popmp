@@ -15,4 +15,9 @@ public class MenuController : MonoBehaviour
         Application.Quit();
         Debug.Log("Salir del juego"); // Esto se verá en el editor pero no afectará el juego compilado.
     }
+
+    public void Creditos()
+    {
+        transition.StartGame("Credits");
+    }
 }
