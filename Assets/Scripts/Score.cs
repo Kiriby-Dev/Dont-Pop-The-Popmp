@@ -36,6 +36,7 @@ public class Score : MonoBehaviour
 
     private int puntuacionFinal;
     private float tiempoTotal;
+    private bool botonesHabilitados = false;
 
     private void Awake()
     {
@@ -53,7 +54,7 @@ public class Score : MonoBehaviour
         // Mostrar tiempo total en UI
         if (textoTiempo != null)
         {
-            textoTiempo.text = "TIEMPO: " + tiempoTotal.ToString("F2");
+            textoTiempo.text = "TIME: " + tiempoTotal.ToString("F2");
         }
 
         // Calcular la puntuación basada en el tiempo
@@ -98,6 +99,7 @@ public class Score : MonoBehaviour
             }
             audioBurbuja.Play();
             StartCoroutine(AnimacionEscala(textoNota.transform));
+            botonesHabilitados = true;
         }
     }
 
@@ -127,7 +129,7 @@ public class Score : MonoBehaviour
     {
         if (textoPuntuacion != null)
         {
-            textoPuntuacion.text = $"PUNTAJE: {puntuacionActual}";
+            textoPuntuacion.text = $"SCORE: {puntuacionActual}";
         }
 
         int puntuacionInicial = puntuacionActual;
@@ -143,7 +145,7 @@ public class Score : MonoBehaviour
 
             if (textoPuntuacion != null)
             {
-                textoPuntuacion.text = $"PUNTAJE: {puntuacionInterpolada}";
+                textoPuntuacion.text = $"SCORE: {puntuacionInterpolada}";
             }
 
             yield return null;
@@ -151,7 +153,7 @@ public class Score : MonoBehaviour
 
         if (textoPuntuacion != null)
         {
-            textoPuntuacion.text = $"PUNTAJE: {puntuacionFinal}";
+            textoPuntuacion.text = $"SCORE: {puntuacionFinal}";
         }
     }
 
@@ -241,20 +243,26 @@ public class Score : MonoBehaviour
    
     public void RestartGame()
     {
-        PlayerPrefs.SetInt("Paused", 0);
-        string lastLevel = PlayerPrefs.GetString("LastLevel", "Nivel1"); // Si no hay datos, vuelve a Nivel1
-        SceneManager.LoadScene(lastLevel);
-        Time.timeScale = 1f;
-        PlayerPrefs.SetInt("CantidadIntentos", 0);
+        if (botonesHabilitados) {
+            PlayerPrefs.SetInt("Paused", 0);
+            string lastLevel = PlayerPrefs.GetString("LastLevel", "Nivel1"); // Si no hay datos, vuelve a Nivel1
+            SceneManager.LoadScene(lastLevel);
+            Time.timeScale = 1f;
+            PlayerPrefs.SetInt("CantidadIntentos", 0);
+        }
+        
     }
  
 
     public void LoadMainMenu()
     {
-        PlayerPrefs.SetInt("Paused", 0);
-        Time.timeScale = 1f;    // Restaura el tiempo antes de cargar la escena
-        GameObject prefMenu = GameObject.Find("UniquePrefab");
-        Destroy(prefMenu);
-        SceneManager.LoadScene("MenuNiveles");
+        if (botonesHabilitados) {
+            PlayerPrefs.SetInt("Paused", 0);
+            Time.timeScale = 1f;    // Restaura el tiempo antes de cargar la escena
+            GameObject prefMenu = GameObject.Find("UniquePrefab");
+            Destroy(prefMenu);
+            SceneManager.LoadScene("MenuNiveles");
+        }
+        
     }
 }
