@@ -86,6 +86,7 @@ public class LevelCarousel : MonoBehaviour
     // Modificado: Cargar nivel a partir del índice de la escena
     void LoadLevel(int levelIndex)
     {
+        PlayerPrefs.SetInt("CurrentLevel", levelIndex);
         string nivel = levelIndex.ToString();
         int levelUnlock = PlayerPrefs.GetInt("Unlocked" + nivel, 0); // Valor por defecto 0 (bloqueado)
 

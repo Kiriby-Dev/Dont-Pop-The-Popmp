@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -15,12 +16,12 @@ public class Score : MonoBehaviour
     [SerializeField] private float tiempoPuntosBurbujas = 0.75f;
 
     [Header("Notas")]
-    [SerializeField] private int puntuacionS = 6000;
-    [SerializeField] private int puntuacionA = 4900;
-    [SerializeField] private int puntuacionB = 4100;
-    [SerializeField] private int puntuacionC = 3400;
-    [SerializeField] private int puntuacionD = 2300;
-    [SerializeField] private int puntuacionE = 800;
+    private int puntuacionS = 6000;
+    private int puntuacionA = 4900;
+    private int puntuacionB = 4100;
+    private int puntuacionC = 3400;
+    private int puntuacionD = 2300;
+    private int puntuacionE = 800;
 
     [Header("Burbujas")]
     [SerializeField] private Image burbuja1;
@@ -59,7 +60,7 @@ public class Score : MonoBehaviour
         // Calcular la puntuación basada en el tiempo
         if (tiempoTotal < 148.295f)
         {
-            puntuacionFinal = Mathf.FloorToInt(18759 - (3752.4f * Mathf.Log(tiempoTotal)));
+            puntuacionFinal = Mathf.FloorToInt((18759 - (3752.4f * Mathf.Log(tiempoTotal)))/10);
         }
         else
         {
@@ -208,6 +209,51 @@ public class Score : MonoBehaviour
 
     private string NotaFinal(int puntuacion)
     {
+        int nivel = PlayerPrefs.GetInt("CurrentLevel");
+        Debug.Log("Calculando puntaje para el nivel "+nivel);
+        switch (nivel)
+        {
+            case 0:
+                puntuacionS = 1330;
+                puntuacionA = 1182;
+                puntuacionB = 1034;
+                puntuacionC = 738;
+                puntuacionD = 433;
+                puntuacionE = 147;
+                break;
+            case 1:
+                puntuacionS = 900;
+                puntuacionA = 800;
+                puntuacionB = 700;
+                puntuacionC = 500;
+                puntuacionD = 300;
+                puntuacionE = 100;
+                break;
+            case 2:
+                puntuacionS = 900;
+                puntuacionA = 800;
+                puntuacionB = 700;
+                puntuacionC = 500;
+                puntuacionD = 300;
+                puntuacionE = 100;
+                break;
+            case 3:
+                puntuacionS = 925;
+                puntuacionA = 822;
+                puntuacionB = 720;
+                puntuacionC = 513;
+                puntuacionD = 308;
+                puntuacionE = 102;
+                break;
+            case 4:
+                puntuacionS = 970;
+                puntuacionA = 862;
+                puntuacionB = 754;
+                puntuacionC = 538;
+                puntuacionD = 323;
+                puntuacionE = 107;
+                break;
+        }        
         if (puntuacion >= puntuacionS)
         {
             return "S";  // Excelente
