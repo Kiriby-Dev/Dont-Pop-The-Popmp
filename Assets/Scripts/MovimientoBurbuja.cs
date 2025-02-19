@@ -16,7 +16,7 @@ public class MovimientoBurbuja : MonoBehaviour
 
     [Header("Cooldowns")]
     [SerializeField] private float delay = 0.01f;
-    [SerializeField] private float clickCooldown = 0.4f;
+    [SerializeField] private float clickCooldown = 0.2f;
     [SerializeField] private float timerCooldown = 0;
 
     private bool isWaiting = false;
