@@ -211,8 +211,8 @@ public class Score : MonoBehaviour
 
     private string NotaFinal(int puntuacion)
     {
-        int nivel = PlayerPrefs.GetInt("CurrentLevel");
-        Debug.Log("Calculando puntaje para el nivel "+nivel);
+        int nivel = PlayerPrefs.GetInt("Nivel");
+        Debug.Log("Calculando puntaje para el nivel "+ nivel);
         switch (nivel)
         {
             case 0:
